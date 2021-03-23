@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Roboro', sans-serif;
+}
+
+button {
+    border-radius: 50px;
+    font-size: 16px;
+    line-height: 150%;
+    color: #FFFFFF;
+    border: none;
+    outline: none;
+}
+
+button:hover {
+    cursor: pointer;
+}
