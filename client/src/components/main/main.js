@@ -1,29 +1,27 @@
-import Header from '../header/header';
-
 import { useHistory } from 'react-router-dom';
 
 import s from './style.module.css';
 
-const Main = ({ title, descr }) => {
-    // const history = useHistory();
-    // const handleClick = () => {
-    //     history.push('/');
-    // }
+const Main = () => {
+    const history = useHistory();
+    const handleStartGame = () => {
+        history.push('/games');
+    }
     
     return (
         <>
             <div className={s.main}>
-                <Header />
                 <div className={s.main_footer_block}>
-                    <button className={s.start_game}>
+                    <button onClick={()=> {handleStartGame()}}
+                        className={`blue_button`}>
                         Начать игру
                     </button>
                     <div className={s.stats_block}>
                         <div className={s.stats_daily}>
-                            <div>Изучено слов сегодня: <span>{0}</span></div>
+                            Изучено слов сегодня: <span>{0}</span>
                         </div>
                         <div className={s.stats_general}>
-                            <div>Изучено слов за всё время: <span>{0}</span></div>
+                            Изучено слов за всё время: <span>{0}</span>
                         </div>
                     </div>
                     <div className={s.progress_block}>
