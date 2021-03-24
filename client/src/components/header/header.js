@@ -24,9 +24,9 @@ const Header = ({ title, descr }) => {
                 <nav className={s.nav}>
                     <ul>
                         {
-                            links.map(link => {
+                            links.map((link, id) => {
                                 return (
-                                    <li className={s.nav_list}>
+                                    <li key={id} className={s.nav_list}>
                                         <a href="#" className={s.nav_links}
                                         onClick={(e)=>{handleLinkNavigation(e, link)}}>
                                             {link}
