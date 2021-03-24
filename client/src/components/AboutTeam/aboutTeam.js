@@ -70,7 +70,8 @@ const AboutTeam = () => {
                             authors.map(auth => {
                                 return (
                                     <div key={auth.id} className={s.card}>
-                                        <div className={`${s.img} ${s[auth.imgStyle]}`}>
+                                        <div className={s.img_wrapper}>
+                                            <div className={`${s.img} ${s[auth.imgStyle]}`} />
                                         </div>
                                         <div className={s.name}>
                                             {auth.name}

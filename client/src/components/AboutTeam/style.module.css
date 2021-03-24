@@ -19,20 +19,6 @@
     align-items: center;
 }
 
-.alk {
-    background-image: url('../../assets/Alk.PNG');
-    background-size: contain;
-}
-/* .alex {
-    background-image: url('../../assets/');
-}
-.oybek {
-    background-image: url('../../assets/');
-}
-.ruslan {
-    background-image: url('../../assets/'); 
-} */
-
 .about_logoblock {
     position: relative;
     width: 75%;
@@ -70,15 +56,42 @@
     align-items: center;
 }
 
-.img {
+.img_wrapper {
     margin-top: 40%;
     margin-bottom: 40px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 50%;
+}
+
+.img {
+
     width: 190px;
     height: 190px;
     border-radius: 50%;
-    background-color: rgb(24, 155, 78);
+    background-color: rgb(9, 87, 80);
     box-sizing: border-box;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: all .3s ease-in-out;
 }
+
+.img:hover {
+    transform: scale(1.2);
+}
+
+.alk {
+    background-image: url('../../assets/Alk.PNG');
+}
+/* .alex {
+    background-image: url('../../assets/');
+}
+.oybek {
+    background-image: url('../../assets/');
+}
+.ruslan {
+    background-image: url('../../assets/'); 
+} */
 
 .name {
     margin-bottom: 15px;
