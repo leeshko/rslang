@@ -20,7 +20,7 @@
 }
 
 .about_logoblock {
-    margin-top: 15%;
+    margin-top: 5%;
     position: relative;
     width: 75%;
     display: flex;
@@ -143,6 +143,10 @@
 }
 
 @media (max-width: 900px) {
+    .about_logoblock {
+        margin-top: 15%;
+
+    }
     .card{
         height: 360px;
     }
