@@ -19,6 +19,20 @@
     align-items: center;
 }
 
+.alk {
+    background-image: url('../../assets/Alk.PNG');
+    background-size: contain;
+}
+/* .alex {
+    background-image: url('../../assets/');
+}
+.oybek {
+    background-image: url('../../assets/');
+}
+.ruslan {
+    background-image: url('../../assets/'); 
+} */
+
 .about_logoblock {
     position: relative;
     width: 75%;

@@ -8,16 +8,16 @@ const AboutTeam = () => {
     const [authors, setAuthors] = useState([
         {
             id: 1,
-            img: '../',
+            imgStyle: 'alk',
             name: 'Олег Кольцов',
             git: '@AlekRing',
-            gitLink: 'https://github.com/AlekRing',
+            gitLink: 'url(https://github.com/AlekRing)',
             role: 'done something',
             activated: false,
         },
         {
             id: 2,
-            img: '../',
+            imgStyle: 'alex',
             name: 'Алексей',
             git: '@git..',
             gitLink: 'github.com/..',
@@ -26,7 +26,7 @@ const AboutTeam = () => {
         },
         {
             id: 3,
-            img: '../',
+            imgStyle: 'oybek',
             name: 'Ойбек',
             git: '@git..',
             gitLink: 'github.com/..',
@@ -35,7 +35,7 @@ const AboutTeam = () => {
         },
         {
             id: 4,
-            img: '../',
+            imgStyle: 'ruslan',
             name: 'Руслан',
             git: '@git..',
             gitLink: 'github.com/..',
@@ -70,8 +70,7 @@ const AboutTeam = () => {
                             authors.map(auth => {
                                 return (
                                     <div key={auth.id} className={s.card}>
-                                        <div className={s.img}>
-                                            IMG
+                                        <div className={`${s.img} ${s[auth.imgStyle]}`}>
                                         </div>
                                         <div className={s.name}>
                                             {auth.name}
