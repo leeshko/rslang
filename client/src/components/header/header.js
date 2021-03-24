@@ -13,6 +13,7 @@ const Header = ({ title, descr }) => {
         e.preventDefault()
 
         if(link === links[0]) history.push('/');
+        if(link === links[1]) history.push('/games');
         if (link === links[5]) history.push('/AboutTeam');
     }
 

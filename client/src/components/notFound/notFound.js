@@ -6,18 +6,18 @@ const NotFound = () => {
     const history = useHistory();
 
     const handleClick = () => {
-        history.push("/home")
+        history.push("/")
     }
 
     return (
-        <>
-            <h1 className={s.header}>
+        <div className={s.notfound}>
+            <h1 className={s.error}>
                 404 NOT FOUND
             </h1>
-            <button className={"link_button"} onClick={handleClick}>
+            <button className={s.get_back} onClick={handleClick}>
                 Get Back
             </button>
-        </>   
+        </div>   
     )
 }
 

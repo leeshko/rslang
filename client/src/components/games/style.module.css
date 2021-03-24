@@ -1,4 +1,4 @@
-.about {
+.games {
     width: 100%;
     max-width: 1920px;
     height: 100vh;
@@ -8,6 +8,7 @@
     background-size: cover;
     color: white;
 }
+
 
 .bg_blur {
     width: inherit;
@@ -28,10 +29,10 @@
 
 .eclips {
     position: relative;
-    top: -18%;
-    width: 90px;
-    height: 44px;
-    background-image: url('../../assets/Ellipse.png');
+    top: -50%;
+    width: 78px;
+    height: 78px;
+    background-image: url('../../assets/Ellipse_games.png');
     background-repeat: no-repeat;
 }
 
@@ -42,7 +43,7 @@
     font-weight: bold;
 }
 
-.cards_block {
+.games_block {
     width: 80%;
     display: grid;
     grid-template-columns: auto auto auto auto;
@@ -81,34 +82,12 @@
     transform: scale(1.2);
 }
 
-.alk {
-    background-image: url('../../assets/Alk.PNG');
-}
-/* .dmitry {
-    background-image: url('../../assets/');
-}
-.oybek {
-    background-image: url('../../assets/');
-}
-.ruslan {
-    background-image: url('../../assets/'); 
-} */
-
-.name {
+.title {
     margin-bottom: 15px;
 }
 
-.git {
-    margin-bottom: 40px;
-}
-
-.git a {
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.git a:hover {
-    color: white;
+.description {
+    margin-bottom: 1.6rem;
 }
 
 .donat_btn {
@@ -128,20 +107,6 @@
     background-color: rgba(255, 255, 255, .7);
 }
 
-.role {
-    position: absolute;
-    bottom: 0px;
-    transition: all .2s ease-in;
-}
-
-.nope {
-    opacity: 0;
-}
-
-.active {
-    color: rgba(255, 255, 255, 0.6);
-}
-
 @media (max-width: 900px) {
     .about_logoblock {
         margin-top: 15%;
@@ -150,7 +115,7 @@
     .card{
         height: 360px;
     }
-    .cards_block {
+    .games_block {
         width: 80%;
         display: grid;
         grid-template-columns: auto auto;
@@ -166,3 +131,4 @@
         height: 110px;
     }
 }
+

@@ -2,7 +2,8 @@ import React from 'react';
 import { useLocation, Route, Switch, Redirect } from 'react-router-dom';
 
 import './App.css';
-import AboutTeam from './components/AboutTeam/aboutTeam';
+import AboutTeam from './components/aboutTeam/aboutTeam';
+import Games from './components/games/games';
 import Header from './components/header/header';
 import LoginRegister from './components/loginRegister/loginRegistration';
 import Main from './components/main/main';
@@ -19,6 +20,10 @@ function App() {
           <Switch>
             <Route path='/' exact component={Main}/>
             <Route path='/AboutTeam' component={AboutTeam}/>
+            <Route path='/games' component={Games}/>
+            <Route render={()=>(
+                <Redirect to="/404"/>
+            )} />
           </Switch>
         </Route>
       </Switch>

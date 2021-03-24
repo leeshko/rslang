@@ -17,8 +17,8 @@ const AboutTeam = () => {
         },
         {
             id: 2,
-            imgStyle: 'alex',
-            name: 'Алексей',
+            imgStyle: 'dmitry',
+            name: 'Дмитрий',
             git: '@git..',
             gitLink: 'github.com/..',
             role: 'done something',
