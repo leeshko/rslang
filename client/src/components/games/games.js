@@ -7,24 +7,32 @@ const Games = () => {
 
     const games = [
         {
-            title: 'a',
-            description: 'aaa',
+            title: 'Саванна',
+            action: 'Отличная тренировка',
             imgStyle: 'game1',
+            imgbg: 'linebg1',
+            description: 'Тренирует понимание речи и быстрого перевода слов, помогает не забыть выученные слова.'
         },
         {
-            title: 'b',
-            description: 'aaa',
+            title: 'Спринт',
+            action: 'Приготовься к скорости',
             imgStyle: 'game2',
+            imgbg: 'linebg2',
+            description: 'Напоминает пройденные слова, тренирует быстрый  перевод.'
         },
         {
-            title: 'v',
-            description: 'aaa',
+            title: 'Аудиовызов',
+            action: 'Приготовь наушники',
             imgStyle: 'game3',
+            imgbg: 'linebg3',
+            description: 'Повышает уровень восприятия речи на слух.'
         },
         {
-            title: 'g',
-            description: 'aaa',
+            title: '[наша игра]',
+            action: 'Наслаждайся',
             imgStyle: 'game4',
+            imgbg: 'linebg4',
+            description: 'Надо придумать.'
         }
     ]
 
@@ -55,18 +63,22 @@ const Games = () => {
                                 return (
                                     <div key={id} className={s.card}>
                                         <div className={s.img_wrapper}>
+                                            <div className={`${s.img} ${s[game.imgbg]}`} />
                                             <div className={`${s.img} ${s[game.imgStyle]}`} />
                                         </div>
                                         <div className={s.title}>
                                             {game.title}
                                         </div>
+                                        <div className={s.action}>
+                                            {game.action}
+                                        </div>
+                                        <button onClick={()=>{activateRole(game.id)}}
+                                            className={"blue_button"}>
+                                            Я в игре
+                                        </button>
                                         <div className={s.description}>
                                             {game.description}
                                         </div>
-                                        <button onClick={()=>{activateRole(game.id)}}
-                                            className={s.donat_btn}>
-                                            Начать игру
-                                        </button>
                                     </div>
                                 )
                             })
