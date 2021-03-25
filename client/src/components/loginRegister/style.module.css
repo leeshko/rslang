@@ -1,0 +1,70 @@
+:root {
+    --margin-bot: 10%;
+    --margin-bot-adapt: 15px;
+}
+
+.reg {
+    width: 100%;
+    max-width: 1920px;
+    height: 100vh;
+    background-color: black;
+    background-image: url('../../assets/register.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reg_block {
+    max-width: 490px;
+    width: 100%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(1px);
+}
+
+.reg_form {
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reg_block input {
+    width: 100%;
+    height: 44px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: none;
+    outline: none;
+    border-radius: 50px;
+}
+
+.reg_block h3 {
+    margin: 0;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.reg_block p {
+    max-width: 90%;
+    margin-bottom: var(--margin-bot);
+    text-align: center;
+    line-height: 160%;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.input {
+    margin-bottom: var(--margin-bot);
+    padding: 0 6%;
+    color: rgba(255, 255, 255, 0.9);
+    box-sizing: border-box;
+}
+
+.input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+

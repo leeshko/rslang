@@ -3,11 +3,20 @@ import { useHistory } from 'react-router-dom';
 import s from './style.module.css';
 
 const Header = ({ title, descr }) => {
-    // const history = useHistory();
+    const history = useHistory();
 
-    // const handleClick = () => {
-    //     history.push('/');
-    // }
+    const handleLogin = () => {
+        history.push('/registration');
+    }
+
+    const handleLinkNavigation = (e, link) => {
+        e.preventDefault()
+
+        if(link === links[0]) history.push('/');
+        if(link === links[1]) history.push('/games');
+        if (link === links[5]) history.push('/AboutTeam');
+    }
+
     const links = ['Главная','Мини-игры','Статистика','Словарь','О приложении','О команде']
 
     return (
@@ -16,11 +25,11 @@ const Header = ({ title, descr }) => {
                 <nav className={s.nav}>
                     <ul>
                         {
-                            links.map(link => {
+                            links.map((link, id) => {
                                 return (
-                                    <li className={s.nav_list}>
+                                    <li key={id} className={s.nav_list}>
                                         <a href="#" className={s.nav_links}
-                                        onClick={(e)=>{e.preventDefault()}}>
+                                        onClick={(e)=>{handleLinkNavigation(e, link)}}>
                                             {link}
                                         </a>
                                     </li>
@@ -28,7 +37,8 @@ const Header = ({ title, descr }) => {
                             })
                         }
                     </ul>
-                    <button className={s.login_button}>
+                    <button onClick={()=>{handleLogin()}}
+                        className={s.login_button}>
                         Зайти в кабинет
                     </button>
                 </nav>
