@@ -14,7 +14,8 @@ const Header = ({ title, descr }) => {
 
         if(link === links[0]) history.push('/');
         if(link === links[1]) history.push('/games');
-        if (link === links[5]) history.push('/AboutTeam');
+        if (link === links[4]) history.push('/about-app');
+        if (link === links[5]) history.push('/about-team');
     }
 
     const links = ['Главная','Мини-игры','Статистика','Словарь','О приложении','О команде']
