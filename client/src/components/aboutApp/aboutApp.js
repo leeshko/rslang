@@ -1,17 +1,9 @@
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useState } from 'react';
+// import { useHistory } from 'react-router-dom';
 
 import s from './style.module.css';
 
 const AboutApp = () => {
-
-    const pros = [
-        {
-            iconId: 1,
-            description: ''
-        }
-    ]
-
     return (
         <>
             <div className={s.about}>

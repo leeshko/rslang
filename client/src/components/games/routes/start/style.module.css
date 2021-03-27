@@ -3,7 +3,7 @@
     max-width: 1920px;
     height: 100vh;
     background: black;
-    background-image: url('../../assets/games.png');
+    background-image: url('../../../../assets/games.png');
     background-repeat: no-repeat;
     background-size: cover;
     color: white;
@@ -32,7 +32,7 @@
     top: -40%;
     width: 78px;
     height: 78px;
-    background-image: url('../../assets/Ellipse_games.png');
+    background-image: url('../../../../assets/Ellipse_games.png');
     background-repeat: no-repeat;
 }
 
@@ -82,28 +82,28 @@
 }
 
 .img_wrapper .game1 {
-    background-image: url('../../assets/game1Vector.png');
+    background-image: url('../../../../assets/game1Vector.png');
 }
 .img_wrapper .linebg1 {
-    background-image: url('../../assets/game1VectorLins.png');
+    background-image: url('../../../../assets/game1VectorLins.png');
 }
 .img_wrapper .game2 {
-    background-image: url('../../assets/game2Vector.png');
+    background-image: url('../../../../assets/game2Vector.png');
 }
 .img_wrapper .linebg2 {
-    background-image: url('../../assets/game2VectorLins.png');
+    background-image: url('../../../../assets/game2VectorLins.png');
 }
 .img_wrapper .game3 {
-    background-image: url('../../assets/game3Vector.png');
+    background-image: url('../../../../assets/game3Vector.png');
 }
 .img_wrapper .linebg3 {
-    background-image: url('../../assets/game3VectorLins.png');
+    background-image: url('../../../../assets/game3VectorLins.png');
 }
 .img_wrapper .game4 {
-    background-image: url('../../assets/game4Vector.png');
+    background-image: url('../../../../assets/game4Vector.png');
 }
 .img_wrapper .linebg4 {
-    background-image: url('../../assets/game4VectorLins.png');
+    background-image: url('../../../../assets/game4VectorLins.png');
 }
 
 

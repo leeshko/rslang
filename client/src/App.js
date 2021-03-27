@@ -1,15 +1,15 @@
 import React from 'react';
-import { useLocation, Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import './App.css';
 import AboutTeam from './components/aboutTeam/aboutTeam';
 import AboutApp from './components/aboutApp/aboutApp';
-import Games from './components/games/games';
 import Header from './components/header/header';
 import LoginRegister from './components/loginRegister/loginRegistration';
 import Main from './components/main/main';
 import NotFound from './components/notFound/notFound'
 import Footer from './components/footer/footer';
+import GamesMain from './components/games/gamesMain';
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
           <Switch>
             <Route path='/' exact component={Main}/>
             <Route path='/about-team' component={AboutTeam}/>
-            <Route path='/games' component={Games}/>
+            <Route path='/games' component={GamesMain}/>
             <Route path='/about-app' component={AboutApp}/>
             <Route render={()=>(
                 <Redirect to="/404"/>

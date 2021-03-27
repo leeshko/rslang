@@ -3,50 +3,50 @@ import { useHistory } from 'react-router-dom';
 
 import s from './style.module.css';
 
-const Games = () => {
+const StartPage = () => {
+    const history = useHistory()
 
     const games = [
         {
+            id: 0,
             title: 'Саванна',
             action: 'Отличная тренировка',
             imgStyle: 'game1',
             imgbg: 'linebg1',
-            description: 'Тренирует понимание речи и быстрого перевода слов, помогает не забыть выученные слова.'
+            description: 'Тренирует понимание речи и быстрого перевода слов, помогает не забыть выученные слова.',
+            link: '/savannah'
         },
         {
+            id: 1,
             title: 'Спринт',
             action: 'Приготовься к скорости',
             imgStyle: 'game2',
             imgbg: 'linebg2',
-            description: 'Напоминает пройденные слова, тренирует быстрый  перевод.'
+            description: 'Напоминает пройденные слова, тренирует быстрый  перевод.',
+            link: '/'
         },
         {
+            id: 2,
             title: 'Аудиовызов',
             action: 'Приготовь наушники',
             imgStyle: 'game3',
             imgbg: 'linebg3',
-            description: 'Повышает уровень восприятия речи на слух.'
+            description: 'Повышает уровень восприятия речи на слух.',
+            link: '/'
         },
         {
+            id: 3,
             title: '[наша игра]',
             action: 'Наслаждайся',
             imgStyle: 'game4',
             imgbg: 'linebg4',
-            description: 'Надо придумать.'
+            description: 'Надо придумать.',
+            link: '/'
         }
     ]
 
-    const activateRole = (id) => {
-        // setAuthors(prevState => {
-        //     return (
-        //         prevState.map(auth => {
-        //             if (auth.id === id) {
-        //                 auth.activated = !auth.activated
-        //             }
-        //             return auth
-        //         })
-        //     )
-        // })
+    const chooseGame = (id) => {
+        history.push(`/games${games[id].link}`)
     }
 
     return (
@@ -72,7 +72,7 @@ const Games = () => {
                                         <div className={s.action}>
                                             {game.action}
                                         </div>
-                                        <button onClick={()=>{activateRole(game.id)}}
+                                        <button onClick={()=>{chooseGame(game.id)}}
                                             className={"blue_button"}>
                                             Я в игре
                                         </button>
@@ -90,4 +90,4 @@ const Games = () => {
     )
 }
 
-export default Games;
+export default StartPage;
