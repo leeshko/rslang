@@ -10,6 +10,7 @@ if (localStorage.getItem("state") === null) {
       savedWords: [],
       deletedWords: [],
       showSettings: false,
+      currentSection: "learning_words",
     })
   );
 }
@@ -301,6 +302,29 @@ export const reducer = (state, action) => {
         ...state,
         showSettings: !state.showSettings,
       };
+    case "CHANGE_SECTION":
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          currentWordGroup: action.payload,
+          currentWordGroupPage: 0,
+        })
+      );
+      return {
+        ...state,
+        currentWordGroup: action.payload,
+        currentWordGroupPage: 0,
+      };
+    case "CHANGE_CURRENT_SECTION":
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          currentSection: action.payload,
+        })
+      );
+      return { ...state, currentSection: action.payload };
     default:
       break;
   }

@@ -17,8 +17,12 @@
   position: absolute;
   top: 120px;
 }
-.word > img {
-  display: block;
+.word > .image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.word > div > img {
   height: 150px;
   width: 150px;
   border-radius: 50%;
@@ -27,6 +31,27 @@
   margin: 20px;
   display: flex;
   padding: 20px;
+}
+.navigation nav ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-evenly;
+  color: black;
+  width: 60vw;
+}
+.navigation ul li button {
+  padding: 20px;
+  border-radius: 0px;
+  background-color: inherit;
+  color: black;
+}
+.navigation ul li button.activeButton {
+  color: white;
+  background-color: black;
+}
+.navigation ul li button:hover {
+  background-color: black;
+  color: white;
 }
 .wordInfo {
   margin-left: 10px;
@@ -119,9 +144,25 @@
   top: 5px;
   right: 5px;
 }
+.sectionButtons {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.sectionButtons button {
+  color: black;
+  background-color: rgb(116, 141, 129);
+}
+.sectionButtons .activeButton {
+  color: white;
+  background-color: black;
+}
 @media (max-width: 576px) {
   .wordList {
     width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
 }
 @media (min-width: 976px) {
