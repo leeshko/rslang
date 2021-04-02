@@ -12,7 +12,28 @@ export const defaultState = {
 export const reducer = (state, action) => {
   switch (action.type) {
     case "WORDS_TO_DISPLAY_LOADED":
-      return { ...state, wordsToDisplay: action.payload };
+      let words = action.payload.filter((word) => {
+        let isFound = false;
+        for (let i = 0; i < state.deletedWords.length; i++) {
+          if (state.deletedWords[i].id === word.id) {
+            isFound = true;
+            break;
+          }
+        }
+        if (isFound) {
+          return false;
+        }
+        return true;
+      });
+      words = words.map((word) => {
+        for (let k = 0; k < state.savedWords.length; k++) {
+          if (state.savedWords[k].id === word.id) {
+            return { ...word, isSavedWord: true };
+          }
+        }
+        return word;
+      });
+      return { ...state, wordsToDisplay: words };
     case "TOGGLE_BUTTONS":
       return {
         ...state,
@@ -52,7 +73,45 @@ export const reducer = (state, action) => {
           return word.id !== action.payload;
         });
       } else {
-        newDeletedWords.push(deletedWord.word);
+        newDeletedWords.push({
+          ...deletedWord.word,
+          isDeletedWord: deletedWord.isDeleted,
+        });
+      }
+      if (temporaryWords.length === 0) {
+        if (state.currentWordGroup === 5 && state.currentWordGroupPage === 29) {
+          return {
+            ...state,
+            wordsToDisplay: temporaryWords,
+            deletedWords: newDeletedWords,
+            currentWordGroupPage: 28,
+          };
+        } else if (
+          state.currentWordGroupPage === 0 &&
+          state.currentWordGroupPage === 0
+        ) {
+          return {
+            ...state,
+            wordsToDisplay: temporaryWords,
+            deletedWords: newDeletedWords,
+            currentWordGroupPage: 1,
+          };
+        } else if (state.currentWordGroupPage === 0) {
+          return {
+            ...state,
+            wordsToDisplay: temporaryWords,
+            deletedWords: newDeletedWords,
+            currentWordGroup: state.currentWordGroup - 1,
+            currentWordGroupPage: 29,
+          };
+        } else {
+          return {
+            ...state,
+            wordsToDisplay: temporaryWords,
+            deletedWords: newDeletedWords,
+            currentWordGroupPage: state.currentWordGroupPage - 1,
+          };
+        }
       }
       return {
         ...state,
@@ -60,6 +119,7 @@ export const reducer = (state, action) => {
         deletedWords: newDeletedWords,
       };
     case "DECREASE_PAGE_NUMBER":
+      window.scrollTo(0, 0);
       if (state.currentWordGroupPage === 0) {
         if (state.currentWordGroup !== 0) {
           return {
@@ -77,6 +137,7 @@ export const reducer = (state, action) => {
         };
       }
     case "INCREASE_PAGE_NUMBER":
+      window.scrollTo(0, 0);
       if (state.currentWordGroupPage === 29) {
         if (state.currentWordGroup !== 5) {
           return {

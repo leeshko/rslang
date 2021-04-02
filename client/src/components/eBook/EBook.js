@@ -126,6 +126,15 @@ function EBook() {
         ""
       )}
       <div className={styles.wordList}>
+        {wordsToDisplay.length === 0 ? (
+          <div style={{ textAlign: "center", color: "#000" }}>
+            <h2>
+              Вы переместиле все слова с текущей страницы в "Удалённые Слова"
+            </h2>
+          </div>
+        ) : (
+          ""
+        )}
         {wordsToDisplay.map((word, index) => {
           const audio = new Audio(`${word.audio}`);
           const audioExample = new Audio(`${word.audioExample}`);
