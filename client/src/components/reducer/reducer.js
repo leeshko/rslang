@@ -1,13 +1,30 @@
-export const defaultState = {
-  showWordTranslationAndTranslatedExampleSentence: true,
-  showAddToHardOrDeletedWordsButtons: true,
-  currentWordGroup: 0,
-  currentWordGroupPage: 0,
-  wordsToDisplay: [],
-  savedWords: [],
-  deletedWords: [],
-  showSettings: false,
-};
+if (localStorage.getItem("state") === null) {
+  localStorage.setItem(
+    "state",
+    JSON.stringify({
+      showWordTranslationAndTranslatedExampleSentence: true,
+      showAddToHardOrDeletedWordsButtons: true,
+      currentWordGroup: 0,
+      currentWordGroupPage: 0,
+      wordsToDisplay: [],
+      savedWords: [],
+      deletedWords: [],
+      showSettings: false,
+    })
+  );
+}
+
+// export const defaultState = {
+//   showWordTranslationAndTranslatedExampleSentence: true,
+//   showAddToHardOrDeletedWordsButtons: true,
+//   currentWordGroup: 0,
+//   currentWordGroupPage: 0,
+//   wordsToDisplay: [],
+//   savedWords: [],
+//   deletedWords: [],
+//   showSettings: false,
+// };
+export const defaultState = JSON.parse(localStorage.getItem("state"));
 
 export const reducer = (state, action) => {
   switch (action.type) {
@@ -33,8 +50,19 @@ export const reducer = (state, action) => {
         }
         return word;
       });
+      localStorage.setItem(
+        "state",
+        JSON.stringify({ ...state, wordsToDisplay: words })
+      );
       return { ...state, wordsToDisplay: words };
     case "TOGGLE_BUTTONS":
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          showAddToHardOrDeletedWordsButtons: !state.showAddToHardOrDeletedWordsButtons,
+        })
+      );
       return {
         ...state,
         showAddToHardOrDeletedWordsButtons: !state.showAddToHardOrDeletedWordsButtons,
@@ -57,6 +85,14 @@ export const reducer = (state, action) => {
       } else {
         newSavedWords.push(savedWord.word);
       }
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          wordsToDisplay: tempWords,
+          savedWords: newSavedWords,
+        })
+      );
       return { ...state, wordsToDisplay: tempWords, savedWords: newSavedWords };
     case "DELETE_WORD":
       let deletedWord = {};
@@ -80,6 +116,15 @@ export const reducer = (state, action) => {
       }
       if (temporaryWords.length === 0) {
         if (state.currentWordGroup === 5 && state.currentWordGroupPage === 29) {
+          localStorage.setItem(
+            "state",
+            JSON.stringify({
+              ...state,
+              wordsToDisplay: temporaryWords,
+              deletedWords: newDeletedWords,
+              currentWordGroupPage: 28,
+            })
+          );
           return {
             ...state,
             wordsToDisplay: temporaryWords,
@@ -90,6 +135,15 @@ export const reducer = (state, action) => {
           state.currentWordGroupPage === 0 &&
           state.currentWordGroupPage === 0
         ) {
+          localStorage.setItem(
+            "state",
+            JSON.stringify({
+              ...state,
+              wordsToDisplay: temporaryWords,
+              deletedWords: newDeletedWords,
+              currentWordGroupPage: 1,
+            })
+          );
           return {
             ...state,
             wordsToDisplay: temporaryWords,
@@ -97,6 +151,16 @@ export const reducer = (state, action) => {
             currentWordGroupPage: 1,
           };
         } else if (state.currentWordGroupPage === 0) {
+          localStorage.setItem(
+            "state",
+            JSON.stringify({
+              ...state,
+              wordsToDisplay: temporaryWords,
+              deletedWords: newDeletedWords,
+              currentWordGroup: state.currentWordGroup - 1,
+              currentWordGroupPage: 29,
+            })
+          );
           return {
             ...state,
             wordsToDisplay: temporaryWords,
@@ -105,6 +169,15 @@ export const reducer = (state, action) => {
             currentWordGroupPage: 29,
           };
         } else {
+          localStorage.setItem(
+            "state",
+            JSON.stringify({
+              ...state,
+              wordsToDisplay: temporaryWords,
+              deletedWords: newDeletedWords,
+              currentWordGroupPage: state.currentWordGroupPage - 1,
+            })
+          );
           return {
             ...state,
             wordsToDisplay: temporaryWords,
@@ -113,6 +186,14 @@ export const reducer = (state, action) => {
           };
         }
       }
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          wordsToDisplay: temporaryWords,
+          deletedWords: newDeletedWords,
+        })
+      );
       return {
         ...state,
         wordsToDisplay: temporaryWords,
@@ -122,6 +203,14 @@ export const reducer = (state, action) => {
       window.scrollTo(0, 0);
       if (state.currentWordGroupPage === 0) {
         if (state.currentWordGroup !== 0) {
+          localStorage.setItem(
+            "state",
+            JSON.stringify({
+              ...state,
+              currentWordGroup: state.currentWordGroup - 1,
+              currentWordGroupPage: 29,
+            })
+          );
           return {
             ...state,
             currentWordGroup: state.currentWordGroup - 1,
@@ -131,6 +220,13 @@ export const reducer = (state, action) => {
           return { ...state };
         }
       } else {
+        localStorage.setItem(
+          "state",
+          JSON.stringify({
+            ...state,
+            currentWordGroupPage: state.currentWordGroupPage - 1,
+          })
+        );
         return {
           ...state,
           currentWordGroupPage: state.currentWordGroupPage - 1,
@@ -140,6 +236,14 @@ export const reducer = (state, action) => {
       window.scrollTo(0, 0);
       if (state.currentWordGroupPage === 29) {
         if (state.currentWordGroup !== 5) {
+          localStorage.setItem(
+            "state",
+            JSON.stringify({
+              ...state,
+              currentWordGroup: state.currentWordGroup + 1,
+              currentWordGroupPage: 0,
+            })
+          );
           return {
             ...state,
             currentWordGroup: state.currentWordGroup + 1,
@@ -149,22 +253,50 @@ export const reducer = (state, action) => {
           return { ...state };
         }
       } else {
+        localStorage.setItem(
+          "state",
+          JSON.stringify({
+            ...state,
+            currentWordGroupPage: state.currentWordGroupPage + 1,
+          })
+        );
         return {
           ...state,
           currentWordGroupPage: state.currentWordGroupPage + 1,
         };
       }
     case "TOGGLE_ADD_OR_DELETE_BUTTON":
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          showAddToHardOrDeletedWordsButtons: !state.showAddToHardOrDeletedWordsButtons,
+        })
+      );
       return {
         ...state,
         showAddToHardOrDeletedWordsButtons: !state.showAddToHardOrDeletedWordsButtons,
       };
     case "TOGGLE_TRANSLATION_BUTTON":
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          showWordTranslationAndTranslatedExampleSentence: !state.showWordTranslationAndTranslatedExampleSentence,
+        })
+      );
       return {
         ...state,
         showWordTranslationAndTranslatedExampleSentence: !state.showWordTranslationAndTranslatedExampleSentence,
       };
     case "TOGGLE_SHOW_SETTINGS":
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          showSettings: !state.showSettings,
+        })
+      );
       return {
         ...state,
         showSettings: !state.showSettings,
