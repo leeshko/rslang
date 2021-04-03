@@ -1,34 +1,45 @@
-import React from 'react';
-import { useLocation, Route, Switch, Redirect } from 'react-router-dom';
+import React from "react";
+import {
+  useLocation,
+  Route,
+  Switch,
+  Redirect,
+  BrowserRouter as Router,
+} from "react-router-dom";
 
-import './App.css';
-import AboutTeam from './components/aboutTeam/aboutTeam';
-import Games from './components/games/games';
-import Header from './components/header/header';
-import LoginRegister from './components/loginRegister/loginRegistration';
-import Main from './components/main/main';
-import NotFound from './components/notFound/notFound'
-
+import "./App.css";
+import AboutTeam from "./components/AboutTeam/AboutTeam";
+import Games from "./components/games/Games";
+import Header from "./components/header/Header";
+import LoginRegister from "./components/loginRegister/LoginRegistration";
+import Main from "./components/main/Main";
+import NotFound from "./components/notFound/NotFound";
+import RSLangContext from "./components/context/context";
+import { defaultState, reducer } from "./components/reducer/reducer";
+import EBook from "./components/eBook/EBook";
+import Dictionary from "./components/dictionary/Dictionary";
 function App() {
+  const [state, dispatch] = React.useReducer(reducer, defaultState);
   return (
-    <>
-      <Switch>
-        <Route path='/404' component={NotFound} />
-        <Route path='/registration' component={LoginRegister}/>
-        <Route>
-          <Header />
-          <Switch>
-            <Route path='/' exact component={Main}/>
-            <Route path='/AboutTeam' component={AboutTeam}/>
-            <Route path='/games' component={Games}/>
-            <Route render={()=>(
-                <Redirect to="/404"/>
-            )} />
-          </Switch>
-        </Route>
-      </Switch>
-
-    </>
+    <RSLangContext.Provider value={{ ...state, dispatch }}>
+      <Router>
+        <Switch>
+          <Route path="/404" component={NotFound} />
+          <Route path="/registration" component={LoginRegister} />
+          <Route>
+            <Header />
+            <Switch>
+              <Route path="/" exact component={Main} />
+              <Route path="/AboutTeam" component={AboutTeam} />
+              <Route path="/games" component={Games} />
+              <Route path="/eBook" component={EBook} />
+              <Route path="/dictionary" component={Dictionary} />
+              <Route render={() => <Redirect to="/404" />} />
+            </Switch>
+          </Route>
+        </Switch>
+      </Router>
+    </RSLangContext.Provider>
   );
 }
 
