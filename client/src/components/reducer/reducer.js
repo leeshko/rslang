@@ -578,6 +578,8 @@ export const reducer = (state, action) => {
         currentWordGroupPage: cwgp,
         currentWordGroup: cwg,
       };
+    case "CHANGE_PAGE":
+      return { ...state, currentWordGroupPage: action.payload - 1 };
     default:
       break;
   }

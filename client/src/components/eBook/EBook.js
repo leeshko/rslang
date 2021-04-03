@@ -204,6 +204,30 @@ function EBook() {
                   Настройки Э-Книги
                 </button>
               </li>
+              <li>
+                <input
+                  type="number"
+                  onChange={(event) => {
+                    dispatch({
+                      type: "CHANGE_PAGE",
+                      payload: event.target.value,
+                    });
+                  }}
+                  value={currentWordGroupPage + 1}
+                  max="30"
+                  min="1"
+                  style={{
+                    border: "none",
+                    width: "40px",
+                    ouline: "0px",
+                    textAlign: "center",
+                    fontSize: "1.5rem",
+                    position: "absolute",
+                    top: "0",
+                    right: "0",
+                  }}
+                />
+              </li>
             </ul>
           </nav>
           {wordsToDisplay.length === 0 ? (

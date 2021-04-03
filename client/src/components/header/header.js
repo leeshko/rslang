@@ -14,6 +14,8 @@ const Header = ({ title, descr }) => {
 
     if (link === links[0]) history.push("/");
     if (link === links[1]) history.push("/games");
+    if (link === links[3]) history.push("/eBook");
+    if (link === links[6]) history.push("/dictionary");
     if (link === links[5]) history.push("/AboutTeam");
   };
 
