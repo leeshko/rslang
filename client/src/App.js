@@ -17,6 +17,7 @@ import NotFound from "./components/notFound/NotFound";
 import RSLangContext from "./components/context/context";
 import { defaultState, reducer } from "./components/reducer/reducer";
 import EBook from "./components/eBook/EBook";
+import Dictionary from "./components/dictionary/Dictionary";
 function App() {
   const [state, dispatch] = React.useReducer(reducer, defaultState);
   return (
@@ -32,6 +33,7 @@ function App() {
               <Route path="/AboutTeam" component={AboutTeam} />
               <Route path="/games" component={Games} />
               <Route path="/eBook" component={EBook} />
+              <Route path="/dictionary" component={Dictionary} />
               <Route render={() => <Redirect to="/404" />} />
             </Switch>
           </Route>

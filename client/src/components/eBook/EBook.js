@@ -17,9 +17,7 @@ function EBook() {
     showAddToHardOrDeletedWordsButtons,
     wordsToDisplay,
     showSettings,
-    savedWords,
-    deletedWords,
-    currrentSection,
+    currentSection,
     dispatch,
   } = React.useContext(RSLangContext);
   async function getWords() {
@@ -132,56 +130,62 @@ function EBook() {
             <ul>
               <li>
                 <button
+                  className={currentWordGroup === 0 ? styles.activeButton : ""}
                   onClick={() => {
-                    console.log(currrentSection, "deleted_words");
-                    dispatch({
-                      type: "CHANGE_CURRENT_SECTION",
-                      payload: "learning_words",
-                    });
+                    dispatch({ type: "CHANGE_SUBSECTION", payload: 0 });
                   }}
-                  className={
-                    currrentSection === "learning_words"
-                      ? styles.activeButton
-                      : ""
-                  }
                 >
-                  Изучаемые Слова
+                  Раздел 1
                 </button>
               </li>
               <li>
                 <button
+                  className={currentWordGroup === 1 ? styles.activeButton : ""}
                   onClick={() => {
-                    console.log(currrentSection, "deleted_words");
-                    dispatch({
-                      type: "CHANGE_CURRENT_SECTION",
-                      payload: "difficult_words",
-                    });
+                    dispatch({ type: "CHANGE_SUBSECTION", payload: 1 });
                   }}
-                  className={
-                    currrentSection === "difficult_words"
-                      ? styles.activeButton
-                      : ""
-                  }
                 >
-                  Сложные Слова
+                  Раздел 2
                 </button>
               </li>
               <li>
                 <button
+                  className={currentWordGroup === 2 ? styles.activeButton : ""}
                   onClick={() => {
-                    console.log(currrentSection, "deleted_words");
-                    dispatch({
-                      type: "CHANGE_CURRENT_SECTION",
-                      payload: "deleted_words",
-                    });
+                    dispatch({ type: "CHANGE_SUBSECTION", payload: 2 });
                   }}
-                  className={
-                    currrentSection == "deleted_words"
-                      ? styles.activeButton
-                      : ""
-                  }
                 >
-                  Удаленные Слова
+                  Раздел 3
+                </button>
+              </li>
+              <li>
+                <button
+                  className={currentWordGroup === 3 ? styles.activeButton : ""}
+                  onClick={() => {
+                    dispatch({ type: "CHANGE_SUBSECTION", payload: 3 });
+                  }}
+                >
+                  Раздел 4
+                </button>
+              </li>
+              <li>
+                <button
+                  className={currentWordGroup === 4 ? styles.activeButton : ""}
+                  onClick={() => {
+                    dispatch({ type: "CHANGE_SUBSECTION", payload: 4 });
+                  }}
+                >
+                  Раздел 5
+                </button>
+              </li>
+              <li>
+                <button
+                  className={currentWordGroup === 5 ? styles.activeButton : ""}
+                  onClick={() => {
+                    dispatch({ type: "CHANGE_SUBSECTION", payload: 5 });
+                  }}
+                >
+                  Раздел 6
                 </button>
               </li>
               <li>
@@ -192,7 +196,7 @@ function EBook() {
                     });
                   }}
                   className={
-                    currrentSection === "settings"
+                    currentSection === "settings"
                       ? `${styles.activeButton}`
                       : ""
                   }
@@ -202,56 +206,6 @@ function EBook() {
               </li>
             </ul>
           </nav>
-          <div className={styles.sectionButtons}>
-            <button
-              className={currentWordGroup == 0 ? styles.activeButton : ""}
-              onClick={() => {
-                dispatch({ type: "CHANGE_SECTION", payload: 0 });
-              }}
-            >
-              Раздел 1
-            </button>
-            <button
-              className={currentWordGroup == 1 ? styles.activeButton : ""}
-              onClick={() => {
-                dispatch({ type: "CHANGE_SECTION", payload: 1 });
-              }}
-            >
-              Раздел 2
-            </button>
-            <button
-              className={currentWordGroup == 2 ? styles.activeButton : ""}
-              onClick={() => {
-                dispatch({ type: "CHANGE_SECTION", payload: 2 });
-              }}
-            >
-              Раздел 3
-            </button>
-            <button
-              className={currentWordGroup == 3 ? styles.activeButton : ""}
-              onClick={() => {
-                dispatch({ type: "CHANGE_SECTION", payload: 3 });
-              }}
-            >
-              Раздел 4
-            </button>
-            <button
-              className={currentWordGroup == 4 ? styles.activeButton : ""}
-              onClick={() => {
-                dispatch({ type: "CHANGE_SECTION", payload: 4 });
-              }}
-            >
-              Раздел 5
-            </button>
-            <button
-              className={currentWordGroup == 5 ? styles.activeButton : ""}
-              onClick={() => {
-                dispatch({ type: "CHANGE_SECTION", payload: 5 });
-              }}
-            >
-              Раздел 6
-            </button>
-          </div>
           {wordsToDisplay.length === 0 ? (
             <div style={{ textAlign: "center", color: "#000" }}>
               <h2>
@@ -261,7 +215,7 @@ function EBook() {
           ) : (
             ""
           )}
-          {wordsToDisplay.map((word, index) => {
+          {wordsToDisplay.map((word) => {
             const audio = new Audio(`${word.audio}`);
             const audioExample = new Audio(`${word.audioExample}`);
             const audioMeaning = new Audio(`${word.audioMeaning}`);
@@ -377,8 +331,7 @@ function EBook() {
             );
           })}
           <div className={styles.bottom}>
-            <p>Номер Раздела Слов : {currentWordGroup + 1}</p>
-            <p>Номер Страницы Слов : {currentWordGroupPage + 1}</p>
+            <h3>Номер Страницы Слов : {currentWordGroupPage + 1}</h3>
             <button
               style={{
                 width: "40px",

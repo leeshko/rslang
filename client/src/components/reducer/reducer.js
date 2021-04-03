@@ -9,8 +9,10 @@ if (localStorage.getItem("state") === null) {
       wordsToDisplay: [],
       savedWords: [],
       deletedWords: [],
+      learningWords: [],
       showSettings: false,
       currentSection: "learning_words",
+      deletedPages: {},
     })
   );
 }
@@ -70,6 +72,9 @@ export const reducer = (state, action) => {
       };
     case "TOGGLE_SAVED_WORD":
       let savedWord = {};
+      let found = false;
+      let newSavedWords = state.savedWords;
+      let newLearningWords = state.learningWords;
       let tempWords = state.wordsToDisplay.map((word) => {
         if (word.id === action.payload) {
           savedWord.word = word;
@@ -78,13 +83,30 @@ export const reducer = (state, action) => {
         }
         return word;
       });
-      let newSavedWords = state.savedWords;
       if (!savedWord.isSaved) {
         newSavedWords = state.savedWords.filter((word) => {
           return word.id !== action.payload;
         });
       } else {
-        newSavedWords.push(savedWord.word);
+        newSavedWords.push({
+          ...savedWord.word,
+          isSavedWord: savedWord.isSaved,
+        });
+      }
+      if (newLearningWords.length !== 0) {
+        newLearningWords = state.learningWords.map((word) => {
+          if (word.id === action.payload) {
+            found = true;
+            return { ...word, isSavedWord: !word.isSavedWord };
+          }
+          return word;
+        });
+      }
+      if (!found) {
+        newLearningWords.push({
+          ...savedWord.word,
+          isSavedWord: savedWord.isSaved,
+        });
       }
       localStorage.setItem(
         "state",
@@ -92,19 +114,26 @@ export const reducer = (state, action) => {
           ...state,
           wordsToDisplay: tempWords,
           savedWords: newSavedWords,
+          learningWords: newLearningWords,
         })
       );
-      return { ...state, wordsToDisplay: tempWords, savedWords: newSavedWords };
+      return {
+        ...state,
+        wordsToDisplay: tempWords,
+        savedWords: newSavedWords,
+        learningWords: newLearningWords,
+      };
     case "DELETE_WORD":
       let deletedWord = {};
       let temporaryWords = state.wordsToDisplay.filter((word) => {
         if (word.id === action.payload) {
           deletedWord.word = word;
-          deletedWord.isDeleted = !word.isDeleted;
+          deletedWord.isDeleted = !word.isDeletedWord;
         }
         return word.id !== action.payload;
       });
       let newDeletedWords = state.deletedWords;
+      let newLWords = state.learningWords;
       if (!deletedWord.isDeleted) {
         newDeletedWords = state.deletedWords.filter((word) => {
           return word.id !== action.payload;
@@ -115,40 +144,88 @@ export const reducer = (state, action) => {
           isDeletedWord: deletedWord.isDeleted,
         });
       }
+      newLWords.push({
+        ...deletedWord.word,
+        isDeletedWord: deletedWord.isDeleted,
+      });
       if (temporaryWords.length === 0) {
         if (state.currentWordGroup === 5 && state.currentWordGroupPage === 29) {
           localStorage.setItem(
             "state",
             JSON.stringify({
               ...state,
+              deletedPages: {
+                ...state.deletedPages,
+                [state.currentWordGroup]:
+                  state.deletedPages[state.currentWordGroup] !== undefined
+                    ? {
+                        ...state.deletedPages[state.currentWordGroup],
+                        [state.currentWordGroupPage]: true,
+                      }
+                    : { [state.currentWordGroupPage]: true },
+              },
               wordsToDisplay: temporaryWords,
               deletedWords: newDeletedWords,
+              learningWords: newLWords,
               currentWordGroupPage: 28,
             })
           );
           return {
             ...state,
+            deletedPages: {
+              ...state.deletedPages,
+              [state.currentWordGroup]:
+                state.deletedPages[state.currentWordGroup] !== undefined
+                  ? {
+                      ...state.deletedPages[state.currentWordGroup],
+                      [state.currentWordGroupPage]: true,
+                    }
+                  : { [state.currentWordGroupPage]: true },
+            },
             wordsToDisplay: temporaryWords,
             deletedWords: newDeletedWords,
+            learningWords: newLWords,
             currentWordGroupPage: 28,
           };
         } else if (
-          state.currentWordGroupPage === 0 &&
+          state.currentWordGroup === 0 &&
           state.currentWordGroupPage === 0
         ) {
           localStorage.setItem(
             "state",
             JSON.stringify({
               ...state,
+              deletedPages: {
+                ...state.deletedPages,
+                [state.currentWordGroup]:
+                  state.deletedPages[state.currentWordGroup] !== undefined
+                    ? {
+                        ...state.deletedPages[state.currentWordGroup],
+                        [state.currentWordGroupPage]: true,
+                      }
+                    : { [state.currentWordGroupPage]: true },
+              },
               wordsToDisplay: temporaryWords,
               deletedWords: newDeletedWords,
+              learningWords: newLWords,
               currentWordGroupPage: 1,
             })
           );
           return {
             ...state,
+            deletedPages: {
+              ...state.deletedPages,
+              [state.currentWordGroup]:
+                state.deletedPages[state.currentWordGroup] !== undefined
+                  ? {
+                      ...state.deletedPages[state.currentWordGroup],
+                      [state.currentWordGroupPage]: true,
+                    }
+                  : { [state.currentWordGroupPage]: true },
+            },
             wordsToDisplay: temporaryWords,
             deletedWords: newDeletedWords,
+            learningWords: newLWords,
             currentWordGroupPage: 1,
           };
         } else if (state.currentWordGroupPage === 0) {
@@ -156,16 +233,38 @@ export const reducer = (state, action) => {
             "state",
             JSON.stringify({
               ...state,
+              deletedPages: {
+                ...state.deletedPages,
+                [state.currentWordGroup]:
+                  state.deletedPages[state.currentWordGroup] !== undefined
+                    ? {
+                        ...state.deletedPages[state.currentWordGroup],
+                        [state.currentWordGroupPage]: true,
+                      }
+                    : { [state.currentWordGroupPage]: true },
+              },
               wordsToDisplay: temporaryWords,
               deletedWords: newDeletedWords,
+              learningWords: newLWords,
               currentWordGroup: state.currentWordGroup - 1,
               currentWordGroupPage: 29,
             })
           );
           return {
             ...state,
+            deletedPages: {
+              ...state.deletedPages,
+              [state.currentWordGroup]:
+                state.deletedPages[state.currentWordGroup] !== undefined
+                  ? {
+                      ...state.deletedPages[state.currentWordGroup],
+                      [state.currentWordGroupPage]: true,
+                    }
+                  : { [state.currentWordGroupPage]: true },
+            },
             wordsToDisplay: temporaryWords,
             deletedWords: newDeletedWords,
+            learningWords: newLWords,
             currentWordGroup: state.currentWordGroup - 1,
             currentWordGroupPage: 29,
           };
@@ -174,15 +273,37 @@ export const reducer = (state, action) => {
             "state",
             JSON.stringify({
               ...state,
+              deletedPages: {
+                ...state.deletedPages,
+                [state.currentWordGroup]:
+                  state.deletedPages[state.currentWordGroup] !== undefined
+                    ? {
+                        ...state.deletedPages[state.currentWordGroup],
+                        [state.currentWordGroupPage]: true,
+                      }
+                    : { [state.currentWordGroupPage]: true },
+              },
               wordsToDisplay: temporaryWords,
               deletedWords: newDeletedWords,
+              learningWords: newLWords,
               currentWordGroupPage: state.currentWordGroupPage - 1,
             })
           );
           return {
             ...state,
+            deletedPages: {
+              ...state.deletedPages,
+              [state.currentWordGroup]:
+                state.deletedPages[state.currentWordGroup] !== undefined
+                  ? {
+                      ...state.deletedPages[state.currentWordGroup],
+                      [state.currentWordGroupPage]: true,
+                    }
+                  : { [state.currentWordGroupPage]: true },
+            },
             wordsToDisplay: temporaryWords,
             deletedWords: newDeletedWords,
+            learningWords: newLWords,
             currentWordGroupPage: state.currentWordGroupPage - 1,
           };
         }
@@ -193,77 +314,186 @@ export const reducer = (state, action) => {
           ...state,
           wordsToDisplay: temporaryWords,
           deletedWords: newDeletedWords,
+          learningWords: newLWords,
         })
       );
       return {
         ...state,
         wordsToDisplay: temporaryWords,
         deletedWords: newDeletedWords,
+        learningWords: newLWords,
+      };
+    case "RETURN_WORD":
+      let newDWords = state.deletedWords.filter((word) => {
+        return word.id !== action.payload;
+      });
+      let lWords = state.learningWords.filter((word) => {
+        return word.id !== action.payload;
+      });
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          deletedWords: newDWords,
+          learningWords: lWords,
+        })
+      );
+      return { ...state, deletedWords: newDWords, learningWords: lWords };
+    case "REMOVE_FROM_LEARNING_WORDS":
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          learningWords: state.learningWords.filter(
+            (word) => word.id !== action.payload
+          ),
+        })
+      );
+      return {
+        ...state,
+        learningWords: state.learningWords.filter(
+          (word) => word.id !== action.payload
+        ),
       };
     case "DECREASE_PAGE_NUMBER":
       window.scrollTo(0, 0);
-      if (state.currentWordGroupPage === 0) {
+      if (
+        state.currentWordGroupPage === 0 ||
+        (state.currentWordGroupPage === 1 && state.currentWordGroup === 0)
+      ) {
         if (state.currentWordGroup !== 0) {
+          let tempWordGroup = state.currentWordGroup - 1;
+          let tempWordGroupPage = 29;
+          while (
+            state.deletedPages[tempWordGroup] !== undefined &&
+            state.deletedPages[tempWordGroup][tempWordGroupPage] !== undefined
+          ) {
+            if (tempWordGroupPage === 0) {
+              tempWordGroupPage = 29;
+              tempWordGroup--;
+              continue;
+            }
+            tempWordGroupPage--;
+          }
           localStorage.setItem(
             "state",
             JSON.stringify({
               ...state,
-              currentWordGroup: state.currentWordGroup - 1,
-              currentWordGroupPage: 29,
+              // currentWordGroup: state.currentWordGroup - 1,
+              // currentWordGroupPage: 29,
+              currentWordGroup: tempWordGroup,
+              currentWordGroupPage: tempWordGroupPage,
             })
           );
           return {
             ...state,
-            currentWordGroup: state.currentWordGroup - 1,
-            currentWordGroupPage: 29,
+            // currentWordGroup: state.currentWordGroup - 1,
+            // currentWordGroupPage: 29,
+            currentWordGroup: tempWordGroup,
+            currentWordGroupPage: tempWordGroupPage,
           };
         } else {
           return { ...state };
         }
       } else {
+        let tempWordGroup = state.currentWordGroup;
+        let tempWordGroupPage = state.currentWordGroupPage - 1;
+        while (
+          state.deletedPages[tempWordGroup] !== undefined &&
+          state.deletedPages[tempWordGroup][tempWordGroupPage] !== undefined
+        ) {
+          if (tempWordGroupPage === 0) {
+            tempWordGroupPage = 29;
+            tempWordGroup--;
+            continue;
+          }
+          tempWordGroupPage--;
+        }
         localStorage.setItem(
           "state",
           JSON.stringify({
             ...state,
-            currentWordGroupPage: state.currentWordGroupPage - 1,
+            // currentWordGroupPage: state.currentWordGroupPage - 1,
+            currentWordGroup: tempWordGroup,
+            currentWordGroupPage: tempWordGroupPage,
           })
         );
         return {
           ...state,
-          currentWordGroupPage: state.currentWordGroupPage - 1,
+          // currentWordGroupPage: state.currentWordGroupPage - 1,
+          currentWordGroupPage: tempWordGroupPage,
+          currentWordGroup: tempWordGroup,
         };
       }
     case "INCREASE_PAGE_NUMBER":
       window.scrollTo(0, 0);
       if (state.currentWordGroupPage === 29) {
         if (state.currentWordGroup !== 5) {
+          let temporaryWordGroup = state.currentWordGroup + 1;
+          let temporaryWordGroupPage = 0;
+          while (
+            state.deletedPages[temporaryWordGroup] !== undefined &&
+            state.deletedPages[temporaryWordGroup][temporaryWordGroupPage] !==
+              undefined
+          ) {
+            if (temporaryWordGroupPage === 29) {
+              temporaryWordGroupPage = 0;
+              temporaryWordGroup++;
+              continue;
+            }
+            console.log("loop");
+            temporaryWordGroupPage++;
+            console.log(temporaryWordGroup, temporaryWordGroupPage);
+          }
           localStorage.setItem(
             "state",
             JSON.stringify({
               ...state,
-              currentWordGroup: state.currentWordGroup + 1,
-              currentWordGroupPage: 0,
+              // currentWordGroup: state.currentWordGroup + 1,
+              // currentWordGroupPage: 0,
+              currentWordGroupPage: temporaryWordGroupPage,
+              currentWordGroup: temporaryWordGroup,
             })
           );
           return {
             ...state,
-            currentWordGroup: state.currentWordGroup + 1,
-            currentWordGroupPage: 0,
+            // currentWordGroup: state.currentWordGroup + 1,
+            // currentWordGroupPage: 0,
+            currentWordGroupPage: temporaryWordGroupPage,
+            currentWordGroup: temporaryWordGroup,
           };
         } else {
           return { ...state };
         }
       } else {
+        let temporaryWordGroup = state.currentWordGroup;
+        let temporaryWordGroupPage = state.currentWordGroupPage + 1;
+        while (
+          state.deletedPages[temporaryWordGroup] !== undefined &&
+          state.deletedPages[temporaryWordGroup][temporaryWordGroupPage] !==
+            undefined
+        ) {
+          if (temporaryWordGroupPage === 29) {
+            temporaryWordGroupPage = 0;
+            temporaryWordGroup++;
+            continue;
+          }
+          temporaryWordGroupPage++;
+        }
         localStorage.setItem(
           "state",
           JSON.stringify({
             ...state,
-            currentWordGroupPage: state.currentWordGroupPage + 1,
+            // currentWordGroupPage: state.currentWordGroupPage + 1,
+            currentWordGroupPage: temporaryWordGroupPage,
+            currentWordGroup: temporaryWordGroup,
           })
         );
         return {
           ...state,
-          currentWordGroupPage: state.currentWordGroupPage + 1,
+          // currentWordGroupPage: state.currentWordGroupPage + 1,
+          currentWordGroupPage: temporaryWordGroupPage,
+          currentWordGroup: temporaryWordGroup,
         };
       }
     case "TOGGLE_ADD_OR_DELETE_BUTTON":
@@ -307,24 +537,47 @@ export const reducer = (state, action) => {
         "state",
         JSON.stringify({
           ...state,
-          currentWordGroup: action.payload,
-          currentWordGroupPage: 0,
+          currentSection: action.payload,
         })
       );
       return {
         ...state,
-        currentWordGroup: action.payload,
-        currentWordGroupPage: 0,
+        currentSection: action.payload,
       };
-    case "CHANGE_CURRENT_SECTION":
+    case "CHANGE_SUBSECTION":
+      let cwg = action.payload;
+      let cwgp = 0;
+      while (
+        state.deletedPages[cwg] !== undefined &&
+        state.deletedPages[cwg][cwgp] !== undefined
+      ) {
+        if (cwg === 5) {
+          break;
+        }
+        if (cwgp === 29) {
+          cwg++;
+          cwgp = 0;
+          continue;
+        }
+        cwgp++;
+      }
       localStorage.setItem(
         "state",
         JSON.stringify({
           ...state,
-          currentSection: action.payload,
+          // currentWordGroup: action.payload,
+          // currentWordGroupPage: 0,
+          currentWordGroupPage: cwgp,
+          currentWordGroup: cwg,
         })
       );
-      return { ...state, currentSection: action.payload };
+      return {
+        ...state,
+        // currentWordGroup: action.payload,
+        // currentWordGroupPage: 0,
+        currentWordGroupPage: cwgp,
+        currentWordGroup: cwg,
+      };
     default:
       break;
   }
