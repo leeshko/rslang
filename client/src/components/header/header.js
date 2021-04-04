@@ -10,14 +10,16 @@ const Header = ({ title, descr }) => {
   };
 
   const handleLinkNavigation = (e, link) => {
-    e.preventDefault();
-
-    if (link === links[0]) history.push("/");
-    if (link === links[1]) history.push("/games");
-    if (link === links[3]) history.push("/eBook");
-    if (link === links[6]) history.push("/dictionary");
-    if (link === links[5]) history.push("/AboutTeam");
-  };
+        e.preventDefault();
+   
+        if(link === links[0]) history.push('/');
+        else if(link === links[1]) history.push('/games');
+        else if (link === links[3]) history.push("/eBook");
+        else if (link === links[4]) history.push('/AboutApp');
+        else if (link === links[5]) history.push('/AboutTeam');
+        else if (link === links[6]) history.push("/dictionary");
+    
+    }
 
   const links = [
     "Главная",
