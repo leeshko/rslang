@@ -1,0 +1,71 @@
+footer {
+    position: absolute;
+    padding: .4rem 1.2rem;
+    max-width: 1920px;
+    width: 100%;
+    background-color: #262453;
+    color: rgba(255, 255, 255, 0.4);
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    max-width: 1680px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo_block {
+    display: flex;
+    align-items: center;
+}
+
+.logo_link {
+    width: 112px;
+    height: 94px;
+    background-image: url('../../assets/RSlogo.svg');
+    background-repeat: no-repeat;
+}
+
+.logo_link:hover {
+    transform: scale(1.05);
+}
+
+.RS_link_block {
+    margin-left: 1.6rem;
+    display: flex;
+    align-items: center;
+}
+
+.line {
+    margin-right: .8rem;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.cursor {
+    width: 16px;
+    height: 16px;
+    background-image: url('../../assets/cursor.svg');
+    background-repeat: no-repeat;
+}
+
+.RS_link:hover {
+    color: white;
+}
+
+.git_links_copyright {
+    display: flex;
+    align-items: center;
+}
+
+.git_link a{
+    margin-right: 1rem;
+}
+
+.git_link a:hover{
+    color: white;
+}

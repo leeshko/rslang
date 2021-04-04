@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import s from './style.module.css';
 
@@ -77,7 +76,7 @@ const AboutTeam = () => {
                                             {auth.name}
                                         </div>
                                         <div className={s.git}>
-                                            <a href={auth.gitLink} target={'_blank'}>{auth.git}</a>
+                                            <a href={auth.gitLink} target={'_blank'} rel='noreferrer'>{auth.git}</a>
                                         </div>
                                         <button onClick={()=>{activateRole(auth.id)}}
                                             className={s.donat_btn}>

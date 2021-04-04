@@ -48,3 +48,20 @@ nav {
 .login_button:hover {
     box-shadow: 0 0 6px 4px rgba(178, 78, 215, 0.7);
 }
+
+@media (max-width: 900px) {
+    header {
+        padding: 24px 0 0 0;
+        font-size: 16px;
+    }
+    .login_button {
+        height: 30px;
+        width: 160px;
+        font-size: 14px;
+    }
+}
+@media (max-width: 900px) {
+    header {
+        padding: 24px 0 0 0;
+    }
+}
