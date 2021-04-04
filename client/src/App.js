@@ -8,9 +8,9 @@ import {
 } from "react-router-dom";
 
 import "./App.css";
-import AboutApp from './components/aboutApp/aboutApp';
-import Footer from './components/footer/footer';
-import GamesMain from './components/games/gamesMain';
+import AboutApp from "./components/aboutApp/aboutApp";
+import Footer from "./components/footer/footer";
+import GamesMain from "./components/games/gamesMain";
 import AboutTeam from "./components/AboutTeam/AboutTeam";
 import Header from "./components/header/Header";
 import LoginRegister from "./components/loginRegister/LoginRegistration";
