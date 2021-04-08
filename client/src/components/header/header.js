@@ -2,7 +2,7 @@ import { useHistory } from "react-router-dom";
 
 import s from "./style.module.css";
 
-const Header = ({ title, descr }) => {
+const Header = () => {
   const history = useHistory();
 
   const handleLogin = () => {
