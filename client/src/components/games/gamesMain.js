@@ -1,5 +1,6 @@
 import { useRouteMatch, Switch, Route} from 'react-router-dom';
 import Savanna from './routes/savanna-g1';
+import AudioChallenge from './routes/audioChallenge-g3/audioChallenge';
 import StartPage from './routes/start/start';
 
 const GamesMain = () => {
@@ -10,6 +11,7 @@ const GamesMain = () => {
             <Switch>
                 <Route path={`${match.path}/`} exact component={StartPage} />
                 <Route path={`${match.path}/savannah`} component={Savanna} />
+                <Route path={`${match.path}/audioChallenge`} component={AudioChallenge} />
                 {/* <Route path={`${match.path}/finish`} component={FinishPage} /> */}
             </Switch>
         // </games.Provider>

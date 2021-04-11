@@ -32,7 +32,7 @@ const StartPage = () => {
             imgStyle: 'game3',
             imgbg: 'linebg3',
             description: 'Повышает уровень восприятия речи на слух.',
-            link: '/'
+            link: '/audiochallenge'
         },
         {
             id: 3,
