@@ -36,39 +36,43 @@ const Sapper = () => {
     }
 
     const grid = setMap()
-    console.log(grid)
 
     const findWords = async () => {
-        const gameWords = []
+        const wordsTranslate = []
+        const words = []
+
 
         // random index to choose word wich player gona translate
-        const wordToTranslateIndex = Math.floor(Math.random() * 4)
+        // const wordToTranslateIndex = Math.floor(Math.random() * 4)
 
         const numWords = ((cols * cols) / 2)
 
         for (let i = 0; i < numWords; i ++) {
             let safeIndex = await checkedIndex()
 
-            if (i === wordToTranslateIndex) {
-                const newWord = {
-                        word: WORDS[safeIndex].word,
-                        translation: WORDS[safeIndex].wordTranslate
-                    }
-
-                setWordToTranslate(newWord)
-            }
-
-            gameWords.push(WORDS[safeIndex].wordTranslate)
+            words.push(WORDS[safeIndex].wordTranslate);
+            wordsTranslate.push(WORDS[safeIndex].word);
         }
 
-        // setTranslatedWord(prevState => {
-        //         return (
-        //             prevState.map((w, ind) => {
-        //                 return  gameWords[ind]
-        //             })
-        //         )
-        //     })
+        setWordToTranslate(shuffleArray(wordsTranslate))
+        setTranslatedWord(shuffleArray(words))
     }
+
+    const shuffleArray = (arr) => {
+        let currentIndex = arr.length, temporaryVal, randomInd;
+
+        while (currentIndex !== 0) {
+            randomInd = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            temporaryVal = arr[currentIndex];
+            arr[currentIndex] = arr[randomInd];
+            arr[randomInd] = temporaryVal;
+        }
+
+        return arr;
+    }
+
          
     const checkedIndex = async () => {
         const uncheckedIndex = getRandUncheckedIndex()
@@ -158,6 +162,19 @@ const Sapper = () => {
         } else return
     }
 
+    const fillCells = () => {
+        const cells = document.querySelectorAll('.grid_cell')
+
+        console.log(cells)
+
+        
+    }
+
+
+    useEffect(() => {
+        fillCells()
+    }, [])
+
     // useEffect(()=> {
     //     if (lifesLeft === 0) {
     //         falling('reset')
@@ -171,10 +188,10 @@ const Sapper = () => {
                <div className={s.game_box}>
                     <div className={`${s.screen} ${s.greeting_bye_screen} ${inGame ? `${s.hidden}` : `${s.visible}`}`}>
                         <h3 className={s.title}>
-                            Сапёр
+                            Пазлы
                         </h3>
                         <div className={s.description}>
-                            Разминируй поле слов!
+                            Соедени пары слов!
                         </div>
                         <button 
                             onClick={()=> {startGame()}}
@@ -184,13 +201,13 @@ const Sapper = () => {
                         </button>
                     </div>
                     
-                    <div className={` ${s.screen} ${s.greeting_bye_screen} ${isOver ? s.visible : s.hidden}`}>
+                    <div className={`${s.screen} ${s.greeting_bye_screen} ${isOver ? s.visible : s.hidden}`}>
                         <h3 className={s.title}>
                             GAME OVER!
                         </h3>
                         <table className={s.stats_table}>
                             <tr>
-                                <th className={s.title_min} colspan="3">
+                                <th className={s.title_min} colSpan="3">
                                     Your stats
                                 </th>
                             </tr>
@@ -267,7 +284,10 @@ const Sapper = () => {
                                         key={`${i}-${k}`}
                                         className={s.grid_cell} 
                                     >
-                                        
+                                        {
+                                            
+                                            // k % 2 === 0 ? wordToTranslate[i+k] : translatedWord[i+k]
+                                        }
                                     </div>
                                 ))
                             }

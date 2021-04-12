@@ -1,5 +1,5 @@
 import { useRouteMatch, Switch, Route} from 'react-router-dom';
-import Sapper from './routes/sapper';
+import Sapper from './routes/puzzle';
 import Savanna from './routes/savanna-g1';
 import StartPage from './routes/start/start';
 
