@@ -9,12 +9,14 @@ const MovingLayer = (props) => (
         <SoundLayer />
         <div className={s.wordsLayer}> {props.gameWords.map(wordObj => (
             <WordCell
-                key={wordObj.id}
-                text={wordObj.wordTranslate}
+                key={wordObj._id.$oid}
+                text={wordObj}
+                compare={props.compare}
             />
         ))}
         </div>
-        <ButtonLayer words={props}/>
+        <ButtonLayer words={props}
+        />
     </>
 )
 
