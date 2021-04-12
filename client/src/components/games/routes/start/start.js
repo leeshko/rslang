@@ -36,7 +36,7 @@ const StartPage = () => {
         },
         {
             id: 3,
-            title: 'Сапёр',
+            title: 'Мэтч',
             action: 'Наслаждайся',
             imgStyle: 'game4',
             imgbg: 'linebg4',

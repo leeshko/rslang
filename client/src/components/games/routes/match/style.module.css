@@ -81,16 +81,20 @@
 }
 
 .grid_cell {
-    width: 100px;
-    height: 100px;
+    padding-top: 40%;
+    width: 150px;
+    height: 150px;
     border: 1px solid rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.03em;
+    font-weight: bold;
     text-align: center;
     word-wrap:break-word;
     box-sizing: border-box;
+    transition: 1s background cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .grid_cell:hover {
-    /* cursor: grab; */
+    cursor: pointer;
 }
 
 .game_sats {

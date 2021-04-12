@@ -17,14 +17,18 @@ const Sapper = () => {
     const [score, setScore] = useState(0)
     const [lifesLeft, setLifesLeft] = useState(7)
     const [wrongWord, setWrongWord] = useState([])
+    const [firstWord, setFirstWord] = useState({
+        word: '',
+        div: null
+    })
 
     // game start / end 
     const [inGame, setInGame] = useState(false)
     const [isOver, setIsOver] = useState(false)
 
     // game field
-    const cols = 6
-    const rows = 6
+    const cols = 4
+    const rows = 4
     const setMap = () => {
         const rowsArr = []
 
@@ -127,7 +131,7 @@ const Sapper = () => {
 
     const startGame = () => {
         setInGame(true)
-        findWords()
+        fillCells()
     }
 
     const goto = (route) => {
@@ -163,16 +167,41 @@ const Sapper = () => {
     }
 
     const fillCells = () => {
-        const cells = document.querySelectorAll('.grid_cell')
+        const cells = document.getElementsByClassName(s.grid_cell)
 
-        console.log(cells)
-
-        
+        for (let i = 0; i < cells.length; i++) {
+            const floored = Math.floor(i / 2)
+            i % 2 === 0 ?
+            cells[i].innerText = translatedWord[floored]
+            : cells[i].innerText = wordToTranslate[floored]
+        }
     }
 
+    const addFirstWord = (e) => {
+        console.log(e.target)
+        if (firstWord.word === '') {
+            setFirstWord(prevState => {
+                return {
+                    ...prevState,
+                    word: e.target.innerText,
+                    div: e.target
+                }
+            })
+
+            e.target.style.backgroundColor = 'blueviolet'
+        } else {
+            console.log(firstWord)
+            if (firstWord.div) {
+                firstWord.div.style.backgroundColor = 'red'
+
+            }
+            e.target.style.backgroundColor = 'blue'
+        }
+
+    }
 
     useEffect(() => {
-        fillCells()
+        findWords()
     }, [])
 
     // useEffect(()=> {
@@ -188,13 +217,13 @@ const Sapper = () => {
                <div className={s.game_box}>
                     <div className={`${s.screen} ${s.greeting_bye_screen} ${inGame ? `${s.hidden}` : `${s.visible}`}`}>
                         <h3 className={s.title}>
-                            Пазлы
+                            Match
                         </h3>
                         <div className={s.description}>
-                            Соедени пары слов!
+                            Соедини пары слов!
                         </div>
                         <button 
-                            onClick={()=> {startGame()}}
+                            onClick={startGame}
                             className={`blue_button`}
                         >
                             Старт
@@ -275,19 +304,16 @@ const Sapper = () => {
                         <div 
                             className={s.grid}
                             style={{
-                                gridTemplateColumns: `repeat(${cols}, 100px)`
+                                gridTemplateColumns: `repeat(${cols}, 150px)`
                             }}
                         >
                             {
                                 grid.map((rows, i) => rows.map((col, k) => 
                                     <div 
                                         key={`${i}-${k}`}
-                                        className={s.grid_cell} 
+                                        className={s.grid_cell}
+                                        onClick={(e) => {addFirstWord(e)}}
                                     >
-                                        {
-                                            
-                                            // k % 2 === 0 ? wordToTranslate[i+k] : translatedWord[i+k]
-                                        }
                                     </div>
                                 ))
                             }
