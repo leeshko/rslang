@@ -64,5 +64,12 @@
 .buttonLayer {
     width: 100%;
     flex-grow: 1;
-    background-color: rgb(206, 16, 95);
 }
+
+body:fullscreen {
+    background-color: antiquewhite;
+}
+
+
+
+

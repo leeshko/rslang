@@ -23,8 +23,7 @@
 }
 
 .movingLayer {
-    border-color: chartreuse;
-    border-style: solid;
+
     width: 75%;
     height: 75%;
     margin-top: 5%;
@@ -71,6 +70,7 @@
 .hidden {
     opacity: 0;
     z-index: -1000;
+    display: none;
 }
 
 .visible {
@@ -112,51 +112,45 @@
     box-shadow: 0 0 6px 4px rgba(80, 223, 214, 0.7);
 }
 
+.progress {
+    height: 5px;
+    background-color: rgba(253, 253, 253, 0.5);
+    transition: ease-in-out 0.5s;
+}
 
-
-/* 
-
-.game_sats {
+.fullScrBtn {
+    background-color: black;
+    border-radius: 2px;
     position: absolute;
-    width: 24%;
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.8);
-    top: 2%;
-    right: 6%;
+    bottom: 30px;
+    right: 30px;
+    opacity: 0.4;
+}
+
+.stats_table {
+    width: 80%;
+}
+
+.stats_table, th,tr, td {
+    padding: 4% 1%;
+    border-collapse: collapse;
+    color: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+
+.stats_table, td {
+    min-width: 60px;
+    text-align: center;
+}
+
+.get_back {
+    margin: 2%;
+    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
 }
 
-.lifes {
-    position: relative;
-    top: -4px;
-}
-
-.word {
-    padding: 0 1%;
-    height: 30px;
-    text-align: center;
+.wrongWord {
     font-size: 1.2rem;
-    border: 2px solid rgba(0, 0, 0, 1);
-    background-color: rgba(0, 0, 0, 0.5);
-    box-sizing: border-box;
 }
-
-.word:hover {
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-.word_translate {
-    position: absolute;
-    padding: 1% 2%;
-    top: 0;
-    font-size: 1.6rem;
-    text-align: center;
-    border-radius: 10px;
-    background-color: rgb(88, 0, 0);
-}
-
-.word_translate:hover {
-    user-select: none;
-} */

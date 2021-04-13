@@ -4,7 +4,9 @@ import WordCell from './wordCells/wordCell';
 import SoundLayer from './soundLayer/soundLayer';
 import ButtonLayer from './buttonLayer/buttonLayer';
 
-const MovingLayer = (props) => (
+const MovingLayer = (props) => {
+    
+    return (
     <>
         <SoundLayer />
         <div className={s.wordsLayer}> {props.gameWords.map(wordObj => (
@@ -16,9 +18,10 @@ const MovingLayer = (props) => (
         ))}
         </div>
         <ButtonLayer words={props}
+                    dont={props.dont}
         />
     </>
-)
+)}
 
 export default MovingLayer;
 
