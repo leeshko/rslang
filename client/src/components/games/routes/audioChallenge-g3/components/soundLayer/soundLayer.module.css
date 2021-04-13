@@ -7,10 +7,6 @@
     background: linear-gradient(to top,  rgba(152, 241, 234, 0.4),  rgba(238, 176, 247, 0.4));
     backdrop-filter: blur(15px);
     border-radius: 45px;
-    /* display: flex;
-    justify-content: space-around;
-    align-items: center;
-    overflow: hidden; */
 }
 
 .movingLayer {
@@ -57,52 +53,3 @@
     flex-grow: 1;
     background-color: rgb(206, 16, 95);
 }
-
-
-
-/* 
-
-.game_sats {
-    position: absolute;
-    width: 24%;
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.8);
-    top: 2%;
-    right: 6%;
-    display: flex;
-    justify-content: space-between;
-}
-
-.lifes {
-    position: relative;
-    top: -4px;
-}
-
-.word {
-    padding: 0 1%;
-    height: 30px;
-    text-align: center;
-    font-size: 1.2rem;
-    border: 2px solid rgba(0, 0, 0, 1);
-    background-color: rgba(0, 0, 0, 0.5);
-    box-sizing: border-box;
-}
-
-.word:hover {
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-.word_translate {
-    position: absolute;
-    padding: 1% 2%;
-    top: 0;
-    font-size: 1.6rem;
-    text-align: center;
-    border-radius: 10px;
-    background-color: rgb(88, 0, 0);
-}
-
-.word_translate:hover {
-    user-select: none;
-} */
