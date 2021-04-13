@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  useLocation,
+  // useLocation,
   Route,
   Switch,
   Redirect,
@@ -11,11 +11,11 @@ import "./App.css";
 import AboutApp from './components/aboutApp/aboutApp';
 import Footer from './components/footer/footer';
 import GamesMain from './components/games/gamesMain';
-import AboutTeam from "./components/AboutTeam/AboutTeam";
-import Header from "./components/header/Header";
-import LoginRegister from "./components/loginRegister/LoginRegistration";
-import Main from "./components/main/Main";
-import NotFound from "./components/notFound/NotFound";
+import AboutTeam from "./components/AboutTeam/aboutTeam";
+import Header from "./components/header/header";
+import LoginRegister from "./components/loginRegister/loginRegistration";
+import Main from "./components/main/main";
+import NotFound from "./components/notFound/notFound";
 import RSLangContext from "./components/context/context";
 import { defaultState, reducer } from "./components/reducer/reducer";
 import EBook from "./components/eBook/EBook";

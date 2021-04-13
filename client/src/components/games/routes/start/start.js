@@ -36,12 +36,12 @@ const StartPage = () => {
         },
         {
             id: 3,
-            title: '[наша игра]',
+            title: 'Мэтч',
             action: 'Наслаждайся',
             imgStyle: 'game4',
             imgbg: 'linebg4',
-            description: 'Надо придумать.',
-            link: '/'
+            description: 'Тренирует внимательность.',
+            link: '/match'
         }
     ]
 
