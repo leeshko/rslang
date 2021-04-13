@@ -11,7 +11,7 @@ const GamesMain = () => {
             <Switch>
                 <Route path={`${match.path}/`} exact component={StartPage} />
                 <Route path={`${match.path}/savannah`} component={Savanna} />
-                <Route path={`${match.path}/sapper`} component={Sapper} />
+                <Route path={`${match.path}/match`} component={Sapper} />
             </Switch>
         // </games.Provider>
     );

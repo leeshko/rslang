@@ -15,12 +15,12 @@ const Sapper = () => {
 
     //game parametres
     const [score, setScore] = useState(0)
-    const [lifesLeft, setLifesLeft] = useState(7)
-    const [wrongWord, setWrongWord] = useState([])
     const [firstWord, setFirstWord] = useState({
         word: '',
         div: null
     })
+    const [solvedWords, setSolvedWords] = useState([])
+    const [faileddWords, setFaileddWords] = useState([])
 
     // game start / end 
     const [inGame, setInGame] = useState(false)
@@ -44,6 +44,7 @@ const Sapper = () => {
     const findWords = async () => {
         const wordsTranslate = []
         const words = []
+        let both = {}
 
 
         // random index to choose word wich player gona translate
@@ -56,6 +57,16 @@ const Sapper = () => {
 
             words.push(WORDS[safeIndex].wordTranslate);
             wordsTranslate.push(WORDS[safeIndex].word);
+
+            setBothWords(prevState => {
+                return {
+                    ...prevState,
+                    [`${i}`] : {
+                        [`${words[i]}`] : words[i],
+                        [`${wordsTranslate[i]}`] : wordsTranslate[i],
+                    }
+                }
+            })
         }
 
         setWordToTranslate(shuffleArray(wordsTranslate))
@@ -76,7 +87,6 @@ const Sapper = () => {
 
         return arr;
     }
-
          
     const checkedIndex = async () => {
         const uncheckedIndex = getRandUncheckedIndex()
@@ -105,15 +115,35 @@ const Sapper = () => {
         return tempI
     }
 
-    const checkAnswer = (w) => {
-        if (w === wordToTranslate.translation) {
-            findWords()
-            setScore(prevState => prevState + 83)
-        } else {
-            setLifesLeft(prevState => prevState - 1)
-            minusHeart()
-            pushWrongWord()
-        }
+    const checkAnswer = (e) => {
+        Object.values(bothWords).map((both, id) => {
+            if (both[`${e.target.innerText}`]) {
+                Object.values(both).map((w) => {
+                    if (w === firstWord.word) {
+                        if (solvedWords.includes(w)) console.log('AAA')
+                        e.target.style.backgroundColor = 'rgba(119,57,221,0.4)'
+                        setSolvedWords(prevState => {
+                            prevState.push(w)
+                            prevState.push(e.target.innerText)
+                            return prevState
+                        })
+                        setScore(prevState => prevState + 92)
+                    } else if (w !== e.target.innerText) {
+                        setScore(prevState => prevState - 24)
+                        setFaileddWords(p => {
+                            p.push(firstWord.word)
+                            return p
+                        })
+                        firstWord.div.style.backgroundColor = 'rgba(255,25,50,.4)'
+                    }
+                }) 
+                return both
+            }
+        })
+        setFirstWord({
+            word: '',
+            div: null
+        })
     }
 
 
@@ -153,19 +183,6 @@ const Sapper = () => {
     //     }
     // }, [top])
 
-    const pushWrongWord = () => {
-        if (wrongWord.length !== 0 
-            && !wrongWord.includes(wordToTranslate.word)) {
-                setWrongWord(prevState => {
-                    const arr = prevState
-                    arr.push(wordToTranslate.word)
-                    return arr
-                })
-        } else if (wrongWord.length === 0 ) {
-            setWrongWord([wordToTranslate.word])
-        } else return
-    }
-
     const fillCells = () => {
         const cells = document.getElementsByClassName(s.grid_cell)
 
@@ -178,7 +195,10 @@ const Sapper = () => {
     }
 
     const addFirstWord = (e) => {
-        console.log(e.target)
+        if (solvedWords.includes(e.target.innerText) 
+            || e.target.innerText === firstWord.word
+            || faileddWords.includes(e.target.innerText)) return
+
         if (firstWord.word === '') {
             setFirstWord(prevState => {
                 return {
@@ -188,14 +208,11 @@ const Sapper = () => {
                 }
             })
 
-            e.target.style.backgroundColor = 'blueviolet'
-        } else {
-            console.log(firstWord)
-            if (firstWord.div) {
-                firstWord.div.style.backgroundColor = 'red'
+            e.target.style.backgroundColor = 'rgba(119,57,221,0.4)'
+            return
+        } else if (checkAnswer(e)) {
+            
 
-            }
-            e.target.style.backgroundColor = 'blue'
         }
 
     }
@@ -204,12 +221,11 @@ const Sapper = () => {
         findWords()
     }, [])
 
-    // useEffect(()=> {
-    //     if (lifesLeft === 0) {
-    //         falling('reset')
-    //         gameOver()
-    //     }
-    // }, [lifesLeft])
+    useEffect(()=> {
+        if (cols * rows - (solvedWords.length + faileddWords.length) <= 1) {
+            console.log('gameOver')
+        }
+    }, [solvedWords, faileddWords])
 
     return (
         <>
@@ -253,20 +269,20 @@ const Sapper = () => {
                             </tr>
                             <tr>
                                 <td>
-                                    {score / 83}
+                                    {solvedWords.length}
                                 </td>
                                 <td>
                                     {score}
                                 </td>
                                 <td>
-                                    {/* {wrongWord.map(w => {
+                                    {/* {faileddWords.map(w => {
                                         return (
                                             <div className={s.wrongWord}>
                                                 {w}
                                             </div>
                                         )
                                     })} */}
-                                    {/* {wrongWord.join(',')} */}
+                                    {faileddWords.join(',')}
                                 </td>
                             </tr>
                         </table>
@@ -277,30 +293,25 @@ const Sapper = () => {
                             >
                                 К играм
                             </button>
-                            {/* <button 
-                                onClick={()=> {startNewGame()}}
-                                className={`blue_button`}
-                            >
-                                Играть ещё раз
-                            </button> */}
                         </div>
                     </div>
 
                     <div className={`${s.screen} ${s.game} ${inGame ? `${s.visible}` : `${s.hidden}`}`} id={s.game}>
-                        {/* <div 
-                            className={`${s.word_translate} ${s.word}`}
-                            style={{top: `${top}px`}}
-                        >
-                            {wordToTranslate.word}
-                        </div>
                         <div className={s.game_sats}>
                             <div className={s.lifes} id={s.lifes}>
-                                {'❤❤❤❤❤❤❤'}
+                                <button
+                                    className={`login_button ${s.game_over_btn}`}
+                                    onClick={gameOver}>
+                                    finish game
+                                </button>
                             </div>
-                            <div className={s.score}>
+                            <div
+                                className={s.score}
+                                style={score < 0 ? {color: 'rgba(0,0,50,.9)'} : {}}
+                            >
                                 {score}
                             </div>
-                        </div> */}
+                        </div>
                         <div 
                             className={s.grid}
                             style={{

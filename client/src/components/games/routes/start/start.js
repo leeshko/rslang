@@ -40,8 +40,8 @@ const StartPage = () => {
             action: 'Наслаждайся',
             imgStyle: 'game4',
             imgbg: 'linebg4',
-            description: 'Надо придумать.',
-            link: '/sapper'
+            description: 'Тренирует внимательность.',
+            link: '/match'
         }
     ]
 

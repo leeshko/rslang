@@ -100,7 +100,7 @@
 .game_sats {
     position: absolute;
     width: 24%;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     color: rgba(255, 255, 255, 0.8);
     top: 2%;
     right: 6%;
@@ -139,6 +139,12 @@
 
 .word_translate:hover {
     cursor: auto;
+}
+
+.game_over_btn {
+    margin-right: 20px;
+    width: 130px;
+    height: 26px;
 }
 
 .stats_table {
