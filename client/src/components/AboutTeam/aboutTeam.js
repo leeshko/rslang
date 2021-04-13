@@ -36,8 +36,8 @@ const AboutTeam = () => {
             id: 4,
             imgStyle: 'ruslan',
             name: 'Руслан',
-            git: '@git..',
-            gitLink: 'github.com/..',
+            git: '@NagievR',
+            gitLink: 'url(https://github.com/NagievR)',
             role: 'done something',
             activated: false,
         }
