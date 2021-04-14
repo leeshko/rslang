@@ -1,7 +1,7 @@
 import s from './style.module.css';
 import MovingLayer from './components/movingLayer';
 import WORDS from '../../../../data/words.json'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useHistory } from "react-router-dom";
 import correct from '../sounds/correct.mp3';
@@ -16,44 +16,54 @@ const wrongTranslation = [];
 const correctSound = new Audio(correct);
 const errorSound = new Audio(error);
 
-
-const makeWordArr = () => {
-    gameWords = [];
-
-    for (let i = 0; i < 5; i++) {
-        let startRandomIndex = Math.floor(Math.random() * 3500);
-        gameWords.push(WORDS[startRandomIndex + i]);
-    }
-    //correct answer index
-    correctAnswerWordObject = gameWords[Math.floor(Math.random() * 5)];
-
-    const audioWord = correctAnswerWordObject.audio;
-    imgWord = correctAnswerWordObject.image;
-
-    //take sound & pic
-    audio = new Audio(`https://react-learnwords-example.herokuapp.com/${audioWord}`);
-    let imageSrc = `https://react-learnwords-example.herokuapp.com/${imgWord}`;
-}
-
 const AudioChallenge = () => {
     const [round, setRound] = useState(0);
     const [rulesScreen, setRulesScreen] = useState(true);
     const history = useHistory();
+    const [minRange, setMinRange] = useState(0);
+    const [maxRange, setMaxRange] = useState(550);
 
     const handleFullScr = useFullScreenHandle();
 
-    const startGame = () => {
+    const startGame = (min, max) => {
+        setMinRange(min);
+        setMaxRange(max);
         setRulesScreen(false);
-        makeWordArr();
         audio.play();
     }
+    
+    useEffect(() => {
+        makeWordArr(minRange, maxRange);
+    }, [0, 550])
 
+    const makeWordArr = (minRange, maxRange) => {
+        gameWords = [];
+    
+        for (let i = 0; i < 5; i++) {
+            let startRandomIndex = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
+            gameWords.push(WORDS[startRandomIndex + i]);
+        }
+        //correct answer index
+        correctAnswerWordObject = gameWords[Math.floor(Math.random() * 5)];
+    
+        const audioWord = correctAnswerWordObject.audio;
+        imgWord = correctAnswerWordObject.image;
+    
+        //take sound & pic
+        audio = new Audio(`https://react-learnwords-example.herokuapp.com/${audioWord}`);
+        let imageSrc = `https://react-learnwords-example.herokuapp.com/${imgWord}`;
+    }
+    
     const compareWords = (id) => {
         if (id === correctAnswerWordObject._id.$oid) {
             correctSound.play();
-            makeWordArr();
-            audio.play();
+            makeWordArr(minRange, maxRange);
             setRound(round + 1);
+            if (round < 9) {
+                audio.play();
+            } else {
+             return; 
+            }
         } else {
             dontKnow();
         }
@@ -68,7 +78,7 @@ const AudioChallenge = () => {
     }
 
     const dont = () => {
-        makeWordArr();
+        makeWordArr(minRange, maxRange);
         audio.play();
         setRound(round + 1);
         wrongTranslation.push(`${correctAnswerWordObject.word} - ${correctAnswerWordObject.wordTranslate}`);
@@ -94,12 +104,49 @@ const AudioChallenge = () => {
                                     <div>
                                         Выбери правильный вариант перевода из предлагаемых пяти
                                     </div>
+                                        <h2>Выбери сложность игры</h2>
+                                    <div className={s.buttonLevel}>
                                     <button
-                                        onClick={() => { startGame() }}
+                                        onClick={() => { startGame(1, 550) }}
                                         className={s.blue_button}
                                     >
-                                        Старт
+                                        level 1
                                     </button>
+
+                                    <button
+                                        onClick={() => { startGame(600, 1150) }}
+                                        className={s.blue_button}
+                                    >
+                                        level 2
+                                    </button>
+
+                                    <button
+                                        onClick={() => { startGame(1200, 1750) }}
+                                        className={s.blue_button}
+                                    >
+                                        level 3
+                                    </button>
+
+                                    <button
+                                        onClick={() => { startGame(1800, 2350) }}
+                                        className={s.blue_button}
+                                    >
+                                        level 4
+                                    </button>
+
+                                    <button
+                                        onClick={() => { startGame(2400, 2950) }}
+                                        className={s.blue_button}
+                                    >
+                                        level 5
+                                    </button>
+                                    <button
+                                        onClick={() => { startGame(3000, 3550) }}
+                                        className={s.blue_button}
+                                    >
+                                        level 6
+                                    </button>
+                                    </div>
                                 </div>
                                 : <MovingLayer
                                     gameWords={gameWords}
@@ -113,9 +160,10 @@ const AudioChallenge = () => {
                             <h3 className={s.title}>
                                 GAME OVER!
                         </h3>
+                        
                             <table className={s.stats_table}>
                                 <tr>
-                                    <th className={s.title_min} colspan="3">
+                                    <th className={s.title_min} colSpan="3">
                                         Your stats
                                 </th>
                                 </tr>

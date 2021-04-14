@@ -16,11 +16,11 @@ const AboutTeam = () => {
         },
         {
             id: 2,
-            imgStyle: 'dmitry',
-            name: 'Дмитрий',
-            git: '@git..',
-            gitLink: 'github.com/..',
-            role: 'done something',
+            imgStyle: 'dmitri',
+            name: 'Дмитрий Лишко',
+            git: '@leeshko',
+            gitLink: 'url(https://github.com/leeshko)',
+            role: 'Саздал одну игру.',
             activated: false,
         },
         {
