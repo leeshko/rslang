@@ -1,7 +1,7 @@
 .eBook {
   width: 100%;
   max-width: 1920px;
-  height: 800vh;
+  height: 900vh;
   background-image: url("../../assets/games.png");
   background-repeat: no-repeat;
   background-position: center;
@@ -17,6 +17,7 @@
   position: absolute;
   top: 120px;
 }
+
 .word > .image {
   display: flex;
   justify-content: center;
@@ -31,6 +32,11 @@
   margin: 20px;
   display: flex;
   padding: 20px;
+  /* background-color: blue; */
+}
+.word > .results {
+  color: black;
+  margin-left: 10px;
 }
 .navigation nav ul {
   list-style-type: none;
@@ -183,6 +189,6 @@
 }
 @media (min-width: 976px) {
   .wordList {
-    width: 80%;
+    width: 82%;
   }
 }

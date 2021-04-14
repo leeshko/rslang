@@ -13,6 +13,55 @@ if (localStorage.getItem("state") === null) {
       showSettings: false,
       currentSection: "learning_words",
       deletedPages: {},
+      numberOfLearningWordsPages: 1,
+      numberOfDeletedWordsPages: 1,
+      numberOfSavedWordsPages: 1,
+      dictionaryInfo: {
+        learningWordsWordGroup: 0,
+        learningWordsStart: 0,
+        learningWordsStop: 0,
+        deletedWordsWordGroup: 0,
+        deletedWordsStart: 0,
+        deletedWordsStop: 0,
+        savedWordsWordGroup: 0,
+        savedWordsStart: 0,
+        savedWordsStop: 0,
+      },
+      allWords: {
+        0: {},
+        1: {},
+        2: {},
+        3: {},
+        4: {},
+        5: {},
+      },
+      statistics: {
+        sprint: {
+          record: 0,
+          allTimeFound: 0,
+          allTimeFailed: 0,
+        },
+        savanna: {
+          record: 0,
+          allTimeFound: 0,
+          allTimeFailed: 0,
+        },
+        audioCall: {
+          record: 0,
+          allTimeFound: 0,
+          allTimeFailed: 0,
+        },
+        customGame: {
+          record: 0,
+          allTimeFound: 0,
+          allTimeFailed: 0,
+        },
+      },
+      gameInfo: {
+        showLevels: true,
+        wordGroup: 0,
+        page: 0,
+      },
     })
   );
 }
@@ -70,16 +119,35 @@ export const reducer = (state, action) => {
         ...state,
         showAddToHardOrDeletedWordsButtons: !state.showAddToHardOrDeletedWordsButtons,
       };
+    case "ADD_TO_LEARNING_WORDS":
+      let isFound = false;
+      let newLearnWords = state.learningWords;
+      for (let i = 0; i < newLearnWords.length; i++) {
+        if (newLearnWords[i].id === action.payload.id) {
+          isFound = true;
+          break;
+        }
+      }
+      if (isFound) {
+        return { ...state };
+      }
+      newLearnWords.push(action.payload);
+      newLearnWords = newLearnWords.sort((a, b) => a.group - b.group);
+      return { ...state, learningWords: newLearnWords };
     case "TOGGLE_SAVED_WORD":
       let savedWord = {};
       let found = false;
       let newSavedWords = state.savedWords;
       let newLearningWords = state.learningWords;
+      let newDictionaryInfo = state.dictionaryInfo;
       let tempWords = state.wordsToDisplay.map((word) => {
         if (word.id === action.payload) {
           savedWord.word = word;
           savedWord.isSaved = !word.isSavedWord;
-          return { ...word, isSavedWord: !word.isSavedWord };
+          return {
+            ...word,
+            isSavedWord: !word.isSavedWord,
+          };
         }
         return word;
       });
@@ -92,12 +160,30 @@ export const reducer = (state, action) => {
           ...savedWord.word,
           isSavedWord: savedWord.isSaved,
         });
+        let tmp = newSavedWords.filter(
+          (word) => word.group === savedWord.word.group
+        );
+        if (
+          tmp.length <= 20 &&
+          savedWord.word.group === state.dictionaryInfo.savedWordsWordGroup
+        ) {
+          newDictionaryInfo = {
+            ...newDictionaryInfo,
+            savedWordsStop: tmp.length,
+          };
+        }
+        // else if (newDictionaryInfo.savedWordsStop !== 0) {
+        //   newDictionaryInfo = { ...newDictionaryInfo, savedWordsStop: 20 };
+        // }
       }
       if (newLearningWords.length !== 0) {
         newLearningWords = state.learningWords.map((word) => {
           if (word.id === action.payload) {
             found = true;
-            return { ...word, isSavedWord: !word.isSavedWord };
+            return {
+              ...word,
+              isSavedWord: !word.isSavedWord,
+            };
           }
           return word;
         });
@@ -113,15 +199,17 @@ export const reducer = (state, action) => {
         JSON.stringify({
           ...state,
           wordsToDisplay: tempWords,
-          savedWords: newSavedWords,
-          learningWords: newLearningWords,
+          savedWords: newSavedWords.sort((a, b) => a.group - b.group),
+          learningWords: newLearningWords.sort((a, b) => a.group - b.group),
+          dictionaryInfo: newDictionaryInfo,
         })
       );
       return {
         ...state,
         wordsToDisplay: tempWords,
-        savedWords: newSavedWords,
-        learningWords: newLearningWords,
+        savedWords: newSavedWords.sort((a, b) => a.group - b.group),
+        learningWords: newLearningWords.sort((a, b) => a.group - b.group),
+        dictionaryInfo: newDictionaryInfo,
       };
     case "DELETE_WORD":
       let deletedWord = {};
@@ -165,8 +253,8 @@ export const reducer = (state, action) => {
                     : { [state.currentWordGroupPage]: true },
               },
               wordsToDisplay: temporaryWords,
-              deletedWords: newDeletedWords,
-              learningWords: newLWords,
+              deletedWords: newDeletedWords.sort((a, b) => a.group - b.group),
+              learningWords: newLWords.sort((a, b) => a.group - b.group),
               currentWordGroupPage: 28,
             })
           );
@@ -183,8 +271,8 @@ export const reducer = (state, action) => {
                   : { [state.currentWordGroupPage]: true },
             },
             wordsToDisplay: temporaryWords,
-            deletedWords: newDeletedWords,
-            learningWords: newLWords,
+            deletedWords: newDeletedWords.sort((a, b) => a.group - b.group),
+            learningWords: newLWords.sort((a, b) => a.group - b.group),
             currentWordGroupPage: 28,
           };
         } else if (
@@ -206,8 +294,8 @@ export const reducer = (state, action) => {
                     : { [state.currentWordGroupPage]: true },
               },
               wordsToDisplay: temporaryWords,
-              deletedWords: newDeletedWords,
-              learningWords: newLWords,
+              deletedWords: newDeletedWords.sort((a, b) => a.group - b.group),
+              learningWords: newLWords.sort((a, b) => a.group - b.group),
               currentWordGroupPage: 1,
             })
           );
@@ -224,8 +312,8 @@ export const reducer = (state, action) => {
                   : { [state.currentWordGroupPage]: true },
             },
             wordsToDisplay: temporaryWords,
-            deletedWords: newDeletedWords,
-            learningWords: newLWords,
+            deletedWords: newDeletedWords.sort((a, b) => a.group - b.group),
+            learningWords: newLWords.sort((a, b) => a.group - b.group),
             currentWordGroupPage: 1,
           };
         } else if (state.currentWordGroupPage === 0) {
@@ -244,8 +332,8 @@ export const reducer = (state, action) => {
                     : { [state.currentWordGroupPage]: true },
               },
               wordsToDisplay: temporaryWords,
-              deletedWords: newDeletedWords,
-              learningWords: newLWords,
+              deletedWords: newDeletedWords.sort((a, b) => a.group - b.group),
+              learningWords: newLWords.sort((a, b) => a.group - b.group),
               currentWordGroup: state.currentWordGroup - 1,
               currentWordGroupPage: 29,
             })
@@ -263,8 +351,8 @@ export const reducer = (state, action) => {
                   : { [state.currentWordGroupPage]: true },
             },
             wordsToDisplay: temporaryWords,
-            deletedWords: newDeletedWords,
-            learningWords: newLWords,
+            deletedWords: newDeletedWords.sort((a, b) => a.group - b.group),
+            learningWords: newLWords.sort((a, b) => a.group - b.group),
             currentWordGroup: state.currentWordGroup - 1,
             currentWordGroupPage: 29,
           };
@@ -284,8 +372,8 @@ export const reducer = (state, action) => {
                     : { [state.currentWordGroupPage]: true },
               },
               wordsToDisplay: temporaryWords,
-              deletedWords: newDeletedWords,
-              learningWords: newLWords,
+              deletedWords: newDeletedWords.sort((a, b) => a.group - b.group),
+              learningWords: newLWords.sort((a, b) => a.group - b.group),
               currentWordGroupPage: state.currentWordGroupPage - 1,
             })
           );
@@ -302,8 +390,8 @@ export const reducer = (state, action) => {
                   : { [state.currentWordGroupPage]: true },
             },
             wordsToDisplay: temporaryWords,
-            deletedWords: newDeletedWords,
-            learningWords: newLWords,
+            deletedWords: newDeletedWords.sort((a, b) => a.group - b.group),
+            learningWords: newLWords.sort((a, b) => a.group - b.group),
             currentWordGroupPage: state.currentWordGroupPage - 1,
           };
         }
@@ -313,15 +401,15 @@ export const reducer = (state, action) => {
         JSON.stringify({
           ...state,
           wordsToDisplay: temporaryWords,
-          deletedWords: newDeletedWords,
-          learningWords: newLWords,
+          deletedWords: newDeletedWords.sort((a, b) => a.group - b.group),
+          learningWords: newLWords.sort((a, b) => a.group - b.group),
         })
       );
       return {
         ...state,
         wordsToDisplay: temporaryWords,
-        deletedWords: newDeletedWords,
-        learningWords: newLWords,
+        deletedWords: newDeletedWords.sort((a, b) => a.group - b.group),
+        learningWords: newLWords.sort((a, b) => a.group - b.group),
       };
     case "RETURN_WORD":
       let newDWords = state.deletedWords.filter((word) => {
@@ -580,6 +668,436 @@ export const reducer = (state, action) => {
       };
     case "CHANGE_PAGE":
       return { ...state, currentWordGroupPage: action.payload - 1 };
+    case "INCREASE_SAVED_WORDS_PAGE":
+      const temp = state.savedWords.filter(
+        (word) => word.group === state.dictionaryInfo.savedWordsWordGroup
+      );
+      if (temp.length < 20) {
+        console.log("if");
+        const nextGroup = state.savedWords.filter(
+          (word) => word.group === state.dictionaryInfo.savedWordsWordGroup + 1
+        );
+        if (nextGroup.length === 0) {
+          return { ...state };
+        }
+        let newStart = state.dictionaryInfo.savedWordsStop;
+        let newStop = state.dictionaryInfo.savedWordsStop;
+        const newGroupNumber = nextGroup[0].group;
+        for (let i = 1; i <= 20; i++) {
+          if (
+            (newStop + i) % 20 === 0 ||
+            newStop + i === state.savedWords.length ||
+            newGroupNumber !== state.savedWords[newStop + i].group
+          ) {
+            newStop = newStop + i;
+            break;
+          }
+        }
+        localStorage.setItem(
+          "state",
+          JSON.stringify({
+            ...state,
+            dictionaryInfo: {
+              ...state.dictionaryInfo,
+              savedWordsStart: newStart,
+              savedWordsStop: newStop,
+              savedWordsWordGroup: state.dictionaryInfo.savedWordsWordGroup + 1,
+            },
+            numberOfSavedWordsPages: state.numberOfSavedWordsPages + 1,
+          })
+        );
+        return {
+          ...state,
+          dictionaryInfo: {
+            ...state.dictionaryInfo,
+            savedWordsStart: newStart,
+            savedWordsStop: newStop,
+            savedWordsWordGroup: state.dictionaryInfo.savedWordsWordGroup + 1,
+          },
+          numberOfSavedWordsPages: state.numberOfSavedWordsPages + 1,
+        };
+        // return { ...state };
+      } else if (temp.length === state.dictionaryInfo.savedWordsStop) {
+        console.log("else if");
+        if (state.dictionaryInfo.savedWordsWordGroup === 5) {
+          return { ...state };
+        } else {
+          const nextGroup = state.savedWords.filter(
+            (word) =>
+              word.group === state.dictionaryInfo.savedWordsWordGroup + 1
+          );
+          if (nextGroup.length === 0) {
+            return { ...state };
+          }
+          console.log(nextGroup[0]);
+          let newStart = state.dictionaryInfo.savedWordsStop;
+          let newStop = state.savedWords.savedWordsStop;
+          console.log(newStop);
+          for (let i = 1; i <= 20; i++) {
+            if (
+              (newStop + i) % 20 === 0 ||
+              newStop + i === state.savedWords.length ||
+              state.savedWords.length <= newStop + i
+              // newGroupNumber !== state.savedWords[newStop + i].group
+            ) {
+              newStop = newStop + i;
+              break;
+            }
+          }
+          localStorage.setItem(
+            "state",
+            JSON.stringify({
+              ...state,
+              dictionaryInfo: {
+                ...state.dictionaryInfo,
+                savedWordsStart: newStart,
+                savedWordsStop: newStop,
+                savedWordsWordGroup:
+                  state.dictionaryInfo.savedWordsWordGroup + 1,
+              },
+              numberOfSavedWordsPages: state.numberOfSavedWordsPages + 1,
+            })
+          );
+          return {
+            ...state,
+            dictionaryInfo: {
+              ...state.dictionaryInfo,
+              savedWordsStart: newStart,
+              savedWordsStop: newStop,
+              savedWordsWordGroup: state.dictionaryInfo.savedWordsWordGroup + 1,
+            },
+            numberOfSavedWordsPages: state.numberOfSavedWordsPages + 1,
+          };
+        }
+      } else {
+        console.log("else");
+        if (state.dictionaryInfo.savedWordsStart >= state.savedWords.length) {
+          return { ...state };
+        }
+        let newStart = state.dictionaryInfo.savedWordsStop;
+        let newStop = state.dictionaryInfo.savedWordsStop;
+        for (let i = 1; i <= 20; i++) {
+          if (
+            (newStop + i) % 20 === 0 ||
+            newStop + i === state.savedWords.length ||
+            state.savedWords.length < newStop + i
+          ) {
+            newStop = newStop + i;
+            break;
+          }
+        }
+        // console.log(newStart, newStop, state.savedWords.length);
+        localStorage.setItem(
+          "state",
+          JSON.stringify({
+            ...state,
+            dictionaryInfo: {
+              ...state.dictionaryInfo,
+              savedWordsStart: newStart,
+              savedWordsStop: newStop,
+            },
+            numberOfSavedWordsPages: state.numberOfSavedWordsPages + 1,
+          })
+        );
+        return {
+          ...state,
+          dictionaryInfo: {
+            ...state.dictionaryInfo,
+            savedWordsStart: newStart,
+            savedWordsStop: newStop,
+          },
+          numberOfSavedWordsPages: state.numberOfSavedWordsPages + 1,
+        };
+      }
+    case "INCREASE_DELETED_WORDS_PAGE":
+      const tempo = state.deletedWords.filter(
+        (word) => word.group === state.dictionaryInfo.deletedWordsWordGroup
+      );
+      if (tempo.length < 20) {
+        return { ...state };
+      } else if (tempo.length - 1 === state.dictionaryInfo.deletedWordsStop) {
+        if (state.dictionaryInfo.deletedWordsWordGroup === 5) {
+          return { ...state };
+        } else {
+          const nextGroup = state.deletedWords.filter(
+            (word) =>
+              word.group === state.dictionaryInfo.deletedWordsWordGroup + 1
+          );
+          if (nextGroup.length === 0) {
+            return { ...state };
+          }
+          let newStart = state.dictionaryInfo.deletedWordsStart + 20;
+          let newStop = state.dictionaryInfo.deletedWordsStop;
+          for (let i = 0; i < 20; i++) {
+            if (newStop - i === 20) {
+              newStop = newStop + i;
+              break;
+            }
+          }
+          return {
+            ...state,
+            dictionaryInfo: {
+              ...state.dictionaryInfo,
+              deletedWordsStart: newStart,
+              deletedWordsStop: newStop,
+              deletedWordsWordGroup:
+                state.dictionaryInfo.deletedWordsWordGroup + 1,
+            },
+          };
+        }
+      } else {
+        let newStart = state.dictionaryInfo.deletedWordsStart + 20;
+        let newStop = state.dictionaryInfo.deletedWordsStop;
+        for (let i = 0; i < 20; i++) {
+          if (newStop - i === 20) {
+            newStop = newStop + i;
+            break;
+          }
+        }
+        return {
+          ...state,
+          dictionaryInfo: {
+            ...state.dictionaryInfo,
+            deletedWordsStart: newStart,
+            deletedWordsStop: newStop,
+          },
+        };
+      }
+    case "DECREASE_SAVED_WORDS_PAGE":
+      const tmp = state.savedWords.filter(
+        (word) => word.group === state.dictionaryInfo.savedWordsWordGroup
+      );
+      if (tmp.length < 20) {
+        console.log("if");
+        const prevGroup = state.savedWords.filter(
+          (word) => word.group === state.dictionaryInfo.savedWordsWordGroup - 1
+        );
+        if (prevGroup.length === 0) {
+          return { ...state };
+        }
+        let newStart = state.dictionaryInfo.savedWordsStart;
+        let newStop = state.dictionaryInfo.savedWordsStart;
+        const newPrevNumber = prevGroup[0].group;
+        for (let i = 0; i < 20; i++) {
+          if (
+            (newStart - i) % 20 === 0 ||
+            newStart - i === state.savedWords.length ||
+            newPrevNumber !== state.savedWords[newStart - i - 1].group
+          ) {
+            newStart = newStart - i;
+            break;
+          }
+        }
+        localStorage.setItem(
+          "state",
+          JSON.stringify({
+            ...state,
+            dictionaryInfo: {
+              ...state.dictionaryInfo,
+              savedWordsStart: newStart,
+              savedWordsStop: newStop,
+              savedWordsWordGroup: state.dictionaryInfo.savedWordsWordGroup - 1,
+            },
+            numberOfSavedWordsPages: state.numberOfSavedWordsPages - 1,
+          })
+        );
+        return {
+          ...state,
+          dictionaryInfo: {
+            ...state.dictionaryInfo,
+            savedWordsStart: newStart,
+            savedWordsStop: newStop,
+            savedWordsWordGroup: state.dictionaryInfo.savedWordsWordGroup - 1,
+          },
+          numberOfSavedWordsPages: state.numberOfSavedWordsPages - 1,
+        };
+        // return { ...state };
+      } else {
+        console.log("else");
+        if (state.dictionaryInfo.savedWordsStart === 0) {
+          return { ...state };
+        }
+        let newStart = state.dictionaryInfo.savedWordsStart;
+        let newStop = state.dictionaryInfo.savedWordsStart;
+        const prevGroup = state.savedWords.filter(
+          (word) => word.group === state.dictionaryInfo.savedWordsWordGroup - 1
+        );
+        console.log(newStart);
+        if (state.dictionaryInfo.savedWordsWordGroup !== 0) {
+          const newPrevNumber = prevGroup[0].group;
+          for (let i = 0; i < 20; i++) {
+            if (
+              state.savedWords[newStart - i].group === newPrevNumber ||
+              newStart - i === 0 ||
+              (newStart - i) % 20 === 0
+            ) {
+              newStart = newStart - i + 1;
+              break;
+            }
+          }
+        } else {
+          for (let i = 0; i < 20; i++) {
+            if ((newStart - i) % 20 === 0 || newStart - i === 0) {
+              newStart = newStart - i;
+              break;
+            }
+          }
+        }
+        localStorage.setItem(
+          "state",
+          JSON.stringify({
+            ...state,
+            dictionaryInfo: {
+              ...state.dictionaryInfo,
+              savedWordsStart: newStart,
+              savedWordsStop: newStop,
+            },
+            numberOfSavedWordsPages: state.numberOfSavedWordsPages - 1,
+          })
+        );
+        return {
+          ...state,
+          dictionaryInfo: {
+            ...state.dictionaryInfo,
+            savedWordsStart: newStart,
+            savedWordsStop: newStop,
+          },
+          numberOfSavedWordsPages: state.numberOfSavedWordsPages - 1,
+        };
+      }
+    case "SET_NEW_SPRINT_RECORD":
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          statistics: {
+            ...state.statistics,
+            sprint: { ...state.statistics.sprint, record: action.payload },
+          },
+        })
+      );
+      return {
+        ...state,
+        statistics: {
+          ...state.statistics,
+          sprint: { ...state.statistics.sprint, record: action.payload },
+        },
+      };
+    case "OPEN_GAME_FROM_OUTSIDE":
+      return {
+        ...state,
+        gameInfo: {
+          ...state.gameInfo,
+          showLevels: false,
+          wordGroup: state.currentWordGroup,
+          page: state.currentWordGroupPage,
+        },
+      };
+    case "ADD_TO_ALL_WORDS":
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          allWords: {
+            ...state.allWords,
+            [action.payload.group]: {
+              ...state.allWords[action.payload.group],
+              [action.payload.word]: {
+                ...action.payload,
+                isSavedWord: false,
+                isDeletedWord: false,
+                allTimeFound: 0,
+                allTimeFailed: 0,
+              },
+            },
+          },
+        })
+      );
+      return {
+        ...state,
+        allWords: {
+          ...state.allWords,
+          [action.payload.group]: {
+            ...state.allWords[action.payload.group],
+            [action.payload.word]: {
+              ...action.payload,
+              isSavedWord: false,
+              isDeletedWord: false,
+              allTimeFound: 0,
+              allTimeFailed: 0,
+            },
+          },
+        },
+      };
+    case "INCREMENT_WORD_ALLTIMEFOUND":
+      console.log(state.allWords[action.payload.group]);
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          allWords: {
+            ...state.allWords,
+            [action.payload.group]: {
+              ...state.allWords[action.payload.group],
+              [action.payload.word]: {
+                ...state.allWords[action.payload.group][action.payload.word],
+                allTimeFound:
+                  state.allWords[action.payload.group][action.payload.word]
+                    .allTimeFound + 1,
+              },
+            },
+          },
+        })
+      );
+      return {
+        ...state,
+        allWords: {
+          ...state.allWords,
+          [action.payload.group]: {
+            ...state.allWords[action.payload.group],
+            [action.payload.word]: {
+              ...state.allWords[action.payload.group][action.payload.word],
+              allTimeFound:
+                state.allWords[action.payload.group][action.payload.word]
+                  .allTimeFound + 1,
+            },
+          },
+        },
+      };
+    case "INCREMENT_WORD_ALLTIMEFAILED":
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          allWords: {
+            ...state.allWords,
+            [action.payload.group]: {
+              ...state.allWords[action.payload.group],
+              [action.payload.word]: {
+                ...state.allWords[action.payload.group][action.payload.word],
+                allTimeFailed:
+                  state.allWords[action.payload.group][action.payload.word]
+                    .allTimeFailed + 1,
+              },
+            },
+          },
+        })
+      );
+      return {
+        ...state,
+        allWords: {
+          ...state.allWords,
+          [action.payload.group]: {
+            ...state.allWords[action.payload.group],
+            [action.payload.word]: {
+              ...state.allWords[action.payload.group][action.payload.word],
+              allTimeFailed:
+                state.allWords[action.payload.group][action.payload.word]
+                  .allTimeFailed + 1,
+            },
+          },
+        },
+      };
     default:
       break;
   }
