@@ -130,7 +130,8 @@
 
 .role {
     position: absolute;
-    bottom: 0px;
+    bottom: -10px;
+    text-align: center;
     transition: all .2s ease-in;
 }
 

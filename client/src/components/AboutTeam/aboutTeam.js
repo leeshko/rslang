@@ -11,7 +11,7 @@ const AboutTeam = () => {
             name: 'Олег Кольцов',
             git: '@AlekRing',
             gitLink: 'url(https://github.com/AlekRing)',
-            role: 'done something',
+            role: 'Занимался вёрсткой, коммуникацией с дизайнером, и написал 2 игры.',
             activated: false,
         },
         {
@@ -38,7 +38,7 @@ const AboutTeam = () => {
             name: 'Руслан',
             git: '@NagievR',
             gitLink: 'url(https://github.com/NagievR)',
-            role: 'done something',
+            role: 'Бравый тимлид.',
             activated: false,
         }
     ])
@@ -83,7 +83,7 @@ const AboutTeam = () => {
                                             Вклад в проект
                                         </button>
                                         <div className={`${s.role} ${auth.activated ? s.active : s.nope}`}>
-                                            {auth.role + auth.id}
+                                            {auth.role}
                                         </div>
                                     </div>
                                 )
