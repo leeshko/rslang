@@ -1,0 +1,83 @@
+.about {
+    width: 100%;
+    max-width: 1920px;
+    height: 100vh;
+    background: black;
+    background-image: url('../../assets/aboutApp.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.bg_blur {
+    width: inherit;
+    height: inherit;
+    background: rgba(1, 7, 64, 0.55);
+}
+
+.content_block {
+    margin: 0 auto;
+    max-width: 1280px;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.about_title {
+    text-align: center;
+    line-height: 120%;
+    font-size: 2.6rem;
+    font-weight: bold;
+}
+
+.pros_block {
+    margin: 2.6rem 2rem 0 2rem;
+    display: flex;
+    /* align-items: center;
+    justify-content: center; */
+}
+
+.pros {
+    margin-right: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.prosLast {
+    margin-right: 0;
+
+}
+
+.icon {
+    width: 100px;
+    height: 100px;
+}
+
+.icon_1 {
+    background-image: url('../../assets/icon-1.svg');
+}
+.icon_2 {
+    background-image: url('../../assets/icon-2.svg');
+}
+.icon_3 {
+    background-image: url('../../assets/icon-3.svg');
+}
+
+.breakBar {
+    font-size: 24px;
+    line-height: 140%;
+}
+
+.descr {
+    text-align: justify;
+}
+
+.video_block {
+    background-color: rgba(255, 255, 255, 0.4);
+    width: 500px;
+    height: 300px;
+}

@@ -1,13 +1,15 @@
 .eBook {
   width: 100%;
   max-width: 1920px;
-  height: 800vh;
+  height: 525vh;
   background-image: url("../../assets/games.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
   color: white;
+  display: flex;
+  justify-content: center;
 }
 .wordList {
   border-radius: 5px;

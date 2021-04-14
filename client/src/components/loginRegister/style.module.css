@@ -67,4 +67,22 @@
     color: rgba(255, 255, 255, 0.6);
 }
 
+.btn_sign_up_in {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.sign_up_in:hover {
+    cursor: pointer;
+    color: #4ddad4;
+}
+
+.back_btn {
+    position: absolute;
+    top: 60px;
+    right: 76px;
+}
+
 
