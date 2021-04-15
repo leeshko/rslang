@@ -1,11 +1,10 @@
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import s from './style.module.css';
+import s from "./style.module.css";
 
 const StartPage = () => {
-    const history = useHistory()
-
+  const history = useHistory();
     const games = [
         {
             id: 0,
@@ -23,7 +22,7 @@ const StartPage = () => {
             imgStyle: 'game2',
             imgbg: 'linebg2',
             description: 'Напоминает пройденные слова, тренирует быстрый  перевод.',
-            link: '/'
+            link: '/sprint'
         },
         {
             id: 2,
@@ -45,49 +44,45 @@ const StartPage = () => {
         }
     ]
 
-    const chooseGame = (id) => {
-        history.push(`/games${games[id].link}`)
-    }
+  const chooseGame = (id) => {
+    history.push(`/games${games[id].link}`);
+  };
 
-    return (
-        <>
-            <div className={s.games}>
-                <div className={s.bg_blur}>
-                    <div className={s.about_logoblock}>
-                        <div className={s.eclips}></div>
-                        <div className={s.about_title}>Мини-Игры</div>
-                    </div>
-                    <div className={s.games_block}>
-                        {
-                            games.map((game, id) => {
-                                return (
-                                    <div key={id} className={s.card}>
-                                        <div className={s.img_wrapper}>
-                                            <div className={`${s.img} ${s[game.imgbg]}`} />
-                                            <div className={`${s.img} ${s[game.imgStyle]}`} />
-                                        </div>
-                                        <div className={s.title}>
-                                            {game.title}
-                                        </div>
-                                        <div className={s.action}>
-                                            {game.action}
-                                        </div>
-                                        <button onClick={()=>{chooseGame(game.id)}}
-                                            className={"blue_button"}>
-                                            Я в игре
-                                        </button>
-                                        <div className={s.description}>
-                                            {game.description}
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
+  return (
+    <>
+      <div className={s.games}>
+        <div className={s.bg_blur}>
+          <div className={s.about_logoblock}>
+            <div className={s.eclips}></div>
+            <div className={s.about_title}>Мини-Игры</div>
+          </div>
+          <div className={s.games_block}>
+            {games.map((game, id) => {
+              return (
+                <div key={id} className={s.card}>
+                  <div className={s.img_wrapper}>
+                    <div className={`${s.img} ${s[game.imgbg]}`} />
+                    <div className={`${s.img} ${s[game.imgStyle]}`} />
+                  </div>
+                  <div className={s.title}>{game.title}</div>
+                  <div className={s.action}>{game.action}</div>
+                  <button
+                    onClick={() => {
+                      chooseGame(game.id);
+                    }}
+                    className={"blue_button"}
+                  >
+                    Я в игре
+                  </button>
+                  <div className={s.description}>{game.description}</div>
                 </div>
-            </div>
-        </>
-    )
-}
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default StartPage;
