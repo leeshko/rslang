@@ -24,8 +24,8 @@ const Footer = () => {
                             <a  href='https://github.com/AlekRing' target='_blank' rel='noreferrer'>
                                 @AlekRing  
                             </a>
-                            <a href='/' target='_blank'>  
-                                @fdgfh  
+                            <a href='https://github.com/leeshko' target='_blank' rel='noreferrer'> 
+                                @leeshko  
                             </a>
                             <a href='/' target='_blank'>
                                 @fgfhbnjmh  
