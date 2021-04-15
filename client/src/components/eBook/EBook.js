@@ -225,7 +225,7 @@ function EBook() {
                       : ""
                   }
                 >
-                  Настройки Э-Книги
+                  Настройки Учебника
                 </button>
               </li>
               <li>
@@ -401,7 +401,7 @@ function EBook() {
                             });
                           }}
                         >
-                          <Link to={`/games/audioCall`}>
+                          <Link to={`/games/audiochallenge`}>
                             <img src={audioCallImage} alt="" />
                           </Link>
                         </button>
