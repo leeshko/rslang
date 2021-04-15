@@ -82,8 +82,12 @@
 }
 
 .alk {
-  background-image: url("../../assets/Alk.PNG");
+    background-image: url('../../assets/Alk.PNG');
 }
+ .dmitri {
+    background-image: url('../../assets/lishko.jpg');
+}
+
 .oybek {
   background-image: url("../../assets/Oybek.jpg");
   background-position: bottom;
@@ -130,9 +134,10 @@
 }
 
 .role {
-  position: absolute;
-  bottom: 0px;
-  transition: all 0.2s ease-in;
+    position: absolute;
+    bottom: -10px;
+    text-align: center;
+    transition: all .2s ease-in;
 }
 
 .nope {

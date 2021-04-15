@@ -60,6 +60,7 @@ function EBook() {
       })
     );
   }, [currentWordGroupPage, currentWordGroup]);
+
   return (
     <div className={styles.eBook}>
       {showSettings ? (

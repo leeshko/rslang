@@ -8,6 +8,8 @@
   background-size: cover;
   background-attachment: fixed;
   color: white;
+  display: flex;
+  justify-content: center;
 }
 .wordList {
   border-radius: 5px;

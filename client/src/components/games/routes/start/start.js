@@ -5,46 +5,44 @@ import s from "./style.module.css";
 
 const StartPage = () => {
   const history = useHistory();
-
-  const games = [
-    {
-      id: 0,
-      title: "Саванна",
-      action: "Отличная тренировка",
-      imgStyle: "game1",
-      imgbg: "linebg1",
-      description:
-        "Тренирует понимание речи и быстрого перевода слов, помогает не забыть выученные слова.",
-      link: "/savannah",
-    },
-    {
-      id: 1,
-      title: "Спринт",
-      action: "Приготовься к скорости",
-      imgStyle: "game2",
-      imgbg: "linebg2",
-      description: "Напоминает пройденные слова, тренирует быстрый  перевод.",
-      link: "/sprint",
-    },
-    {
-      id: 2,
-      title: "Аудиовызов",
-      action: "Приготовь наушники",
-      imgStyle: "game3",
-      imgbg: "linebg3",
-      description: "Повышает уровень восприятия речи на слух.",
-      link: "/",
-    },
-    {
-      id: 3,
-      title: "[наша игра]",
-      action: "Наслаждайся",
-      imgStyle: "game4",
-      imgbg: "linebg4",
-      description: "Надо придумать.",
-      link: "/",
-    },
-  ];
+    const games = [
+        {
+            id: 0,
+            title: 'Саванна',
+            action: 'Отличная тренировка',
+            imgStyle: 'game1',
+            imgbg: 'linebg1',
+            description: 'Тренирует понимание речи и быстрого перевода слов, помогает не забыть выученные слова.',
+            link: '/savannah'
+        },
+        {
+            id: 1,
+            title: 'Спринт',
+            action: 'Приготовься к скорости',
+            imgStyle: 'game2',
+            imgbg: 'linebg2',
+            description: 'Напоминает пройденные слова, тренирует быстрый  перевод.',
+            link: '/sprint'
+        },
+        {
+            id: 2,
+            title: 'Аудиовызов',
+            action: 'Приготовь наушники',
+            imgStyle: 'game3',
+            imgbg: 'linebg3',
+            description: 'Повышает уровень восприятия речи на слух.',
+            link: '/audiochallenge'
+        },
+        {
+            id: 3,
+            title: 'Мэтч',
+            action: 'Наслаждайся',
+            imgStyle: 'game4',
+            imgbg: 'linebg4',
+            description: 'Тренирует внимательность.',
+            link: '/match'
+        }
+    ]
 
   const chooseGame = (id) => {
     history.push(`/games${games[id].link}`);

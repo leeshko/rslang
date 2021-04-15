@@ -4,51 +4,51 @@ import s from "./style.module.css";
 
 const AboutTeam = () => {
   const [authors, setAuthors] = useState([
-    {
-      id: 1,
-      imgStyle: "alk",
-      name: "Олег Кольцов",
-      git: "@AlekRing",
-      gitLink: "url(https://github.com/AlekRing)",
-      role: "done something",
-      activated: false,
-    },
-    {
-      id: 2,
-      imgStyle: "dmitry",
-      name: "Дмитрий",
-      git: "@git..",
-      gitLink: "github.com/..",
-      role: "done something",
-      activated: false,
-    },
-    {
-      id: 3,
-      imgStyle: "oybek",
-      name: "Ойбек Маматов",
-      git: "@moonbek007",
-      gitLink: "github.com/moonbek007",
-      role: "done something",
-      activated: false,
-    },
-    {
-      id: 4,
-      imgStyle: "ruslan",
-      name: "Руслан",
-      git: "@git..",
-      gitLink: "github.com/..",
-      role: "done something",
-      activated: false,
-    },
-  ]);
+        {
+            id: 1,
+            imgStyle: 'alk',
+            name: 'Олег Кольцов',
+            git: '@AlekRing',
+            gitLink: 'url(https://github.com/AlekRing)',
+            role: 'Занимался вёрсткой, коммуникацией с дизайнером, и написал 2 игры.',
+            activated: false,
+        },
+        {
+            id: 2,
+            imgStyle: 'dmitri',
+            name: 'Дмитрий Лишко',
+            git: '@leeshko',
+            gitLink: 'url(https://github.com/leeshko)',
+            role: 'Создал одну игру.',
+            activated: false,
+        },
+        {
+            id: 3,
+            imgStyle: "oybek",
+            name: "Ойбек Маматов",
+            git: "@moonbek007",
+            gitLink: "github.com/moonbek007",
+            role: "Написал бизнес логику приложения , секции 'Словарь' и 'Электронная Книга' , создал игру 'Спринт'",
+            activated: false,
+        },
+        {
+            id: 4,
+            imgStyle: 'ruslan',
+            name: 'Руслан',
+            git: '@NagievR',
+            gitLink: 'url(https://github.com/NagievR)',
+            role: 'Бравый тимлид.',
+            activated: false,
+        }])
+   
 
   const activateRole = (id) => {
     setAuthors((prevState) => {
       return prevState.map((auth) => {
         if (auth.id === id) {
           auth.activated = !auth.activated;
+          return auth;
         }
-        return auth;
       });
     });
   };
@@ -100,3 +100,4 @@ const AboutTeam = () => {
 };
 
 export default AboutTeam;
+

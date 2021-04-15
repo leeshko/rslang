@@ -7,11 +7,12 @@
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
-  color: white;
+  color: rgba(255, 255, 255);
 }
 .wordList {
   border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(20px);
   margin-left: 50px;
   padding: 10px;
   position: absolute;

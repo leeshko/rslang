@@ -32,7 +32,22 @@ button:hover {
     box-shadow: 0 0 6px 4px rgba(80, 223, 214, 0.7);
 }
 
+.login_button {
+    height: 44px;
+    width: 184px;
+    background: linear-gradient(90deg, rgba(179,78,215,1) 0%, rgba(60,36,228,1) 100%);
+    -webkit-transition: box-shadow 0.15s ease-in;
+    -moz-transition: box-shadow 0.15s ease-in;
+    -o-transition: box-shadow 0.15s ease-in;
+    transition: box-shadow 0.15s ease-in;
+}
+
+.login_button:hover {
+    box-shadow: 0 0 6px 4px rgba(178, 78, 215, 0.7);
+}
+
 a {
     text-decoration: none;
     color: rgba(255, 255, 255, 0.4);
 }
+
