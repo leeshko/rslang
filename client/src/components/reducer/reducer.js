@@ -36,6 +36,9 @@ if (localStorage.getItem("state") === null) {
         5: {},
       },
       statistics: {
+        wordsLearnt: 0,
+        correctFound: 0,
+        wrongFound: 0,
         sprint: {
           record: 0,
           allTimeFound: 0,
@@ -1263,6 +1266,69 @@ export const reducer = (state, action) => {
           sprint: { ...state.statistics.sprint, record: action.payload },
         },
       };
+    case "SET_NEW_SAVANNA_RECORD":
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          statistics: {
+            ...state.statistics,
+            savanna: { ...state.statistics.savanna, record: action.payload },
+          },
+        })
+      );
+      return {
+        ...state,
+        statistics: {
+          ...state.statistics,
+          savanna: { ...state.statistics.savanna, record: action.payload },
+        },
+      };
+    case "SET_NEW_AUDIOCALL_RECORD":
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          statistics: {
+            ...state.statistics,
+            audioCall: {
+              ...state.statistics.audioCall,
+              record: action.payload,
+            },
+          },
+        })
+      );
+      return {
+        ...state,
+        statistics: {
+          ...state.statistics,
+          audioCall: { ...state.statistics.audioCall, record: action.payload },
+        },
+      };
+    case "SET_NEW_MATCH_RECORD":
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          statistics: {
+            ...state.statistics,
+            customGame: {
+              ...state.statistics.customGame,
+              record: action.payload,
+            },
+          },
+        })
+      );
+      return {
+        ...state,
+        statistics: {
+          ...state.statistics,
+          customGame: {
+            ...state.statistics.customGame,
+            record: action.payload,
+          },
+        },
+      };
     case "OPEN_GAME_FROM_OUTSIDE":
       return {
         ...state,
@@ -1310,7 +1376,6 @@ export const reducer = (state, action) => {
         },
       };
     case "INCREMENT_WORD_ALLTIMEFOUND":
-      console.log(state.allWords[action.payload.group]);
       localStorage.setItem(
         "state",
         JSON.stringify({
@@ -1320,10 +1385,16 @@ export const reducer = (state, action) => {
             [action.payload.group]: {
               ...state.allWords[action.payload.group],
               [action.payload.word]: {
-                ...state.allWords[action.payload.group][action.payload.word],
+                ...action.payload,
                 allTimeFound:
+                  state.allWords[action.payload.group] === undefined ||
+                  state.allWords[action.payload.group][action.payload.word] ===
+                    undefined ||
                   state.allWords[action.payload.group][action.payload.word]
-                    .allTimeFound + 1,
+                    .allTimeFound === undefined
+                    ? 1
+                    : state.allWords[action.payload.group][action.payload.word]
+                        .allTimeFound + 1,
               },
             },
           },
@@ -1336,10 +1407,16 @@ export const reducer = (state, action) => {
           [action.payload.group]: {
             ...state.allWords[action.payload.group],
             [action.payload.word]: {
-              ...state.allWords[action.payload.group][action.payload.word],
+              ...action.payload,
               allTimeFound:
+                state.allWords[action.payload.group] === undefined ||
+                state.allWords[action.payload.group][action.payload.word] ===
+                  undefined ||
                 state.allWords[action.payload.group][action.payload.word]
-                  .allTimeFound + 1,
+                  .allTimeFound === undefined
+                  ? 1
+                  : state.allWords[action.payload.group][action.payload.word]
+                      .allTimeFound + 1,
             },
           },
         },
@@ -1354,10 +1431,16 @@ export const reducer = (state, action) => {
             [action.payload.group]: {
               ...state.allWords[action.payload.group],
               [action.payload.word]: {
-                ...state.allWords[action.payload.group][action.payload.word],
+                ...action.payload,
                 allTimeFailed:
+                  state.allWords[action.payload.group] === undefined ||
+                  state.allWords[action.payload.group][action.payload.word] ===
+                    undefined ||
                   state.allWords[action.payload.group][action.payload.word]
-                    .allTimeFailed + 1,
+                    .allTimeFailed === undefined
+                    ? 1
+                    : state.allWords[action.payload.group][action.payload.word]
+                        .allTimeFailed + 1,
               },
             },
           },
@@ -1370,14 +1453,90 @@ export const reducer = (state, action) => {
           [action.payload.group]: {
             ...state.allWords[action.payload.group],
             [action.payload.word]: {
-              ...state.allWords[action.payload.group][action.payload.word],
+              ...action.payload,
               allTimeFailed:
+                state.allWords[action.payload.group] === undefined ||
+                state.allWords[action.payload.group][action.payload.word] ===
+                  undefined ||
                 state.allWords[action.payload.group][action.payload.word]
-                  .allTimeFailed + 1,
+                  .allTimeFailed === undefined
+                  ? 1
+                  : state.allWords[action.payload.group][action.payload.word]
+                      .allTimeFailed + 1,
             },
           },
         },
       };
+    case "INCREMENT_CORRECT_FOUND":
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          statistics: {
+            ...state.statistics,
+            correctFound: state.statistics.correctFound + 1,
+          },
+        })
+      );
+      return {
+        ...state,
+        statistics: {
+          ...state.statistics,
+          correctFound: state.statistics.correctFound + 1,
+        },
+      };
+    case "INCREMENT_WRONG_FOUND":
+      localStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...state,
+          statistics: {
+            ...state.statistics,
+            wrongFound: state.statistics.wrongFound + 1,
+          },
+        })
+      );
+      return {
+        ...state,
+        statistics: {
+          ...state.statistics,
+          wrongFound: state.statistics.wrongFound + 1,
+        },
+      };
+    case "INCREMENT_WORDS_LEARNT":
+      if (
+        state.allWords[action.payload.group] === undefined ||
+        state.allWords[action.payload.group][action.payload.word] ===
+          undefined ||
+        state.allWords[action.payload.group][action.payload.word]
+          .allTimeFound === undefined ||
+        state.allWords[action.payload.group][action.payload.word]
+          .allTimeFound === 0
+      ) {
+        localStorage.setItem(
+          "state",
+          JSON.stringify({
+            ...state,
+            statistics: {
+              ...state.statistics,
+              wordsLearnt: state.statistics.wordsLearnt + 1,
+            },
+          })
+        );
+        return {
+          ...state,
+          statistics: {
+            ...state.statistics,
+            wordsLearnt: state.statistics.wordsLearnt + 1,
+          },
+        };
+      } else if (
+        state.allWords[action.payload.group][action.payload.word].allTimeFound >
+        0
+      ) {
+        return { ...state };
+      }
+      return { ...state };
     default:
       break;
   }
