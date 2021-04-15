@@ -33,6 +33,9 @@ const Footer = () => {
                             <a href='/' target='_blank'>
                                 @p[cfklgb[p  
                             </a>
+                            <a  href='https://www.behance.net/svetatomchenko' target='_blank' rel='noreferrer'>
+                                @design
+                            </a>
                         </div>
                         <div className={s.line} />
                         <div className={s.year} >
