@@ -57,10 +57,8 @@ function SprintGame() {
     });
   }, [level]);
   React.useEffect(() => {
-    console.log(wordNumber);
     if ((wordNumber + 1) % 20 === 0) {
       if (page + 1 < 30) {
-        console.log(page + 1);
         setPage(page + 1);
         getWords().then((resp) => {
           setWords(resp);
@@ -364,10 +362,12 @@ function SprintGame() {
                   }
                   setStageSuccesInARow(stageSuccessInARow + 1);
                 }
+                dispatch({ type: "INCREMENT_WORDS_LEARNT", payload: word });
                 dispatch({
                   type: "INCREMENT_WORD_ALLTIMEFOUND",
                   payload: word,
                 });
+                dispatch({ type: "INCREMENT_CORRECT_FOUND" });
                 setFoundCorrectInARow(foundCorrectInARow + 1);
                 setScore(score + points);
                 setNumberOfLights(() => {
@@ -390,6 +390,7 @@ function SprintGame() {
                   type: "INCREMENT_WORD_ALLTIMEFAILED",
                   payload: word,
                 });
+                dispatch({ type: "INCREMENT_WRONG_FOUND" });
                 if (failedWords.length === 0) {
                   setFailedWords([word]);
                 } else {
@@ -436,10 +437,12 @@ function SprintGame() {
                   }
                   setStageSuccesInARow(stageSuccessInARow + 1);
                 }
+                dispatch({ type: "INCREMENT_WORDS_LEARNT", payload: word });
                 dispatch({
                   type: "INCREMENT_WORD_ALLTIMEFOUND",
                   payload: word,
                 });
+                dispatch({ type: "INCREMENT_CORRECT_FOUND" });
                 setFoundCorrectInARow(foundCorrectInARow + 1);
                 setScore(score + points);
                 setNumberOfLights(() => {
@@ -462,6 +465,7 @@ function SprintGame() {
                   type: "INCREMENT_WORD_ALLTIMEFAILED",
                   payload: word,
                 });
+                dispatch({ type: "INCREMENT_WRONG_FOUND" });
                 if (failedWords.length === 0) {
                   setFailedWords([word]);
                 } else {
