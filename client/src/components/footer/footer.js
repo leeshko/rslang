@@ -1,23 +1,25 @@
-import s from './style.module.css';
+import s from "./style.module.css";
 
 const Footer = () => {
-    return (
-        <>
-            <footer className={s.root}>
-                <div className={s.container}>
-                    <div className={s.logo_block}>
-                            <a href='https://rs.school/'
-                                className={s.logo_link} target="_blank" rel='noreferrer'>
-
-                            </a>
-                            <div className={s.RS_link_block}>
-                                <div className={s.line} />
-                                <div className={s.cursor} />
-                                <a href='https://rs.school/' target="_blank" rel='noreferrer'
-                                    className={s.RS_link}>
-                                    rs.school
-                                </a>
-                            </div>
+  return (
+    <>
+      <footer className={s.root}>
+        <div className={s.container}>
+          <div className={s.logo_block}>
+            <a
+              href="https://rs.school/"
+              className={s.logo_link}
+              target="_blank"
+              rel="noreferrer"
+            </a>
+             <div className={s.RS_link_block}>
+                   <div className={s.line} />
+                   <div className={s.cursor} />
+                   <a href='https://rs.school/' target="_blank" rel='noreferrer'
+                       className={s.RS_link}>
+                  rs.school
+                   </a>
+             </div>
                     </div>
                     <div className={s.git_links_copyright}>
                         <div className={s.git_link}>
@@ -49,3 +51,5 @@ const Footer = () => {
 }
 
 export default Footer;
+
+

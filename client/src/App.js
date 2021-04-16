@@ -8,18 +8,19 @@ import {
 } from "react-router-dom";
 
 import "./App.css";
-import AboutApp from './components/aboutApp/aboutApp';
-import Footer from './components/footer/footer';
-import GamesMain from './components/games/gamesMain';
+import AboutApp from "./components/aboutApp/aboutApp";
+import Footer from "./components/footer/footer";
+import GamesMain from "./components/games/gamesMain";
 import AboutTeam from "./components/AboutTeam/aboutTeam";
 import Header from "./components/header/header";
 import LoginRegister from "./components/loginRegister/loginRegistration";
-import Main from "./components/main/main";
-import NotFound from "./components/notFound/notFound";
+import Main from "./components/main/Main";
+import NotFound from "./components/notFound/NotFound";
 import RSLangContext from "./components/context/context";
 import { defaultState, reducer } from "./components/reducer/reducer";
 import EBook from "./components/eBook/EBook";
 import Dictionary from "./components/dictionary/Dictionary";
+import Stats from "./components/stats/Stats";
 
 function App() {
   const [state, dispatch] = React.useReducer(reducer, defaultState);
@@ -39,6 +40,7 @@ function App() {
               <Route path="/games" component={GamesMain} />
               <Route path="/eBook" component={EBook} />
               <Route path="/dictionary" component={Dictionary} />
+              <Route path="/stats" component={Stats} />
               <Route render={() => <Redirect to="/404" />} />
             </Switch>
             <Footer />

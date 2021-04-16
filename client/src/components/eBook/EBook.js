@@ -9,6 +9,11 @@ import rightArrowImage from "../../assets/right-arrow.png";
 import settingsImage from "../../assets/settings.png";
 import timesImage from "../../assets/remove.png";
 import tickImage from "../../assets/check.png";
+import savannahImage from "../../assets/savannah.png";
+import sprintImage from "../../assets/agile.png";
+import audioCallImage from "../../assets/headphone.png";
+import Savanna from "../games/routes/savanna-g1/index";
+import { useRouteMatch, Switch, Route, Link } from "react-router-dom";
 function EBook() {
   const {
     currentWordGroup,
@@ -18,8 +23,10 @@ function EBook() {
     wordsToDisplay,
     showSettings,
     currentSection,
+    allWords,
     dispatch,
   } = React.useContext(RSLangContext);
+  const match = useRouteMatch();
   async function getWords() {
     let response = await fetch(
       `https://react-learnwords-example.herokuapp.com/words?group=${currentWordGroup}&page=${currentWordGroupPage}`
@@ -32,7 +39,23 @@ function EBook() {
       dispatch({
         type: "WORDS_TO_DISPLAY_LOADED",
         payload: resp.map((word) => {
-          return { ...word, isSavedWord: false, isDeletedWord: false };
+          if (allWords[word.group][word.word] === undefined) {
+            dispatch({ type: "ADD_TO_ALL_WORDS", payload: word });
+            return {
+              ...word,
+              isSavedWord: false,
+              isDeletedWord: false,
+              allTimeFound: 0,
+              allTimeFailed: 0,
+            };
+          }
+          return {
+            ...word,
+            isSavedWord: false,
+            isDeletedWord: false,
+            allTimeFound: allWords[word.group][word.word].allTimeFound,
+            allTimeFailed: allWords[word.group][word.word].allTimeFailed,
+          };
         }),
       })
     );
@@ -202,7 +225,7 @@ function EBook() {
                       : ""
                   }
                 >
-                  Настройки Э-Книги
+                  Настройки Учебника
                 </button>
               </li>
               <li>
@@ -329,6 +352,60 @@ function EBook() {
                       ) : (
                         ""
                       )}
+                      <div
+                        style={{
+                          position: "relative",
+                        }}
+                      >
+                        <button
+                          style={{
+                            width: "30px",
+                            height: "20px",
+                            backgroundColor: "inherit",
+                          }}
+                          onClick={() => {
+                            dispatch({
+                              type: "OPEN_GAME_FROM_OUTSIDE",
+                            });
+                          }}
+                        >
+                          <Link to={`/games/savannah`}>
+                            <img src={savannahImage} alt="" />
+                          </Link>
+                        </button>
+                        <button
+                          style={{
+                            width: "30px",
+                            height: "20px",
+                            backgroundColor: "inherit",
+                          }}
+                          onClick={() => {
+                            dispatch({
+                              type: "OPEN_GAME_FROM_OUTSIDE",
+                            });
+                          }}
+                        >
+                          <Link to={`/games/sprint`}>
+                            <img src={sprintImage} alt="" />
+                          </Link>
+                        </button>
+                        <button
+                          style={{
+                            width: "30px",
+                            height: "20px",
+                            backgroundColor: "inherit",
+                          }}
+                          onClick={() => {
+                            dispatch({
+                              type: "OPEN_GAME_FROM_OUTSIDE",
+                            });
+                          }}
+                        >
+                          <Link to={`/games/audiochallenge`}>
+                            <img src={audioCallImage} alt="" />
+                          </Link>
+                        </button>
+                      </div>
                     </p>
                   </div>
                   <p style={{ fontWeight: "bold" }}>
@@ -351,6 +428,25 @@ function EBook() {
                       ? word.textExampleTranslate
                       : ""}
                   </p>
+                </div>
+                <div className={styles.results}>
+                  <h4>Результат в играх</h4>
+                  <h5>
+                    Угадано правильно : {word.allTimeFound} раз -{" "}
+                    {word.allTimeFound === 0
+                      ? 0
+                      : (word.allTimeFound * 100) /
+                        (word.allTimeFound + word.allTimeFailed)}{" "}
+                    %
+                  </h5>
+                  <h5>
+                    Угадано неправильно : {word.allTimeFailed} раз -{" "}
+                    {word.allTimeFailed === 0
+                      ? 0
+                      : (word.allTimeFailed * 100) /
+                        (word.allTimeFound + word.allTimeFailed)}{" "}
+                    %
+                  </h5>
                 </div>
               </div>
             );
