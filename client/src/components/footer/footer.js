@@ -24,14 +24,14 @@ const Footer = () => {
                             <a  href='https://github.com/AlekRing' target='_blank' rel='noreferrer'>
                                 @AlekRing  
                             </a>
-                            <a href='/' target='_blank'>  
-                                @fdgfh  
+                            <a href='https://github.com/leeshko' target='_blank' rel='noreferrer'>  
+                                @leeshko  
                             </a>
-                            <a href='/' target='_blank'>
-                                @fgfhbnjmh  
+                            <a href='https://github.com/moonbek007' target='_blank' rel='noreferrer'>
+                                @moonbek007  
                             </a>
-                            <a href='/' target='_blank'>
-                                @p[cfklgb[p  
+                            <a href='https://github.com/NagievR' target='_blank' rel='noreferrer'>
+                                @NagievR  
                             </a>
                             <a  href='https://www.behance.net/svetatomchenko' target='_blank' rel='noreferrer'>
                                 @design
