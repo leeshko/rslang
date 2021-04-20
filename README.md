@@ -1,5 +1,5 @@
 # rslang
-- <code>git clone https://github.com/NagievR/rslang</code>
-- <code>npm install</code>
-- <code>npm start</code>
-- Will be available at http://localhost:3000/
+deployed version
+https://rslang-team59-nagievr.netlify.app/
+
+![image](https://user-images.githubusercontent.com/69458271/115436723-f8f7cd80-a213-11eb-9665-ca8b89296c9d.png)
